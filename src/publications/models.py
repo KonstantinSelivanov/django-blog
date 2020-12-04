@@ -1,9 +1,9 @@
 from django.contrib.auth.models import User
 from django.db import models
-from django.template.defaultfilters import slugify as slugify_ru
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.text import slugify
+
+from .services import slugify
 
 
 class PublishedManager(models.Manager):
@@ -34,8 +34,7 @@ class Post(models.Model):
     )
 
     title = models.CharField(verbose_name='Заголовок поста', max_length=250)
-    slug = models.SlugField(verbose_name='URL',
-                            max_length=250,
+    slug = models.SlugField(max_length=250,
                             blank=True,
                             unique_for_date='date_published')
     author = models.ForeignKey(User,
@@ -49,10 +48,13 @@ class Post(models.Model):
                                    auto_now_add=True)
     updated = models.DateTimeField(verbose_name='Дата обновления поста',
                                    auto_now=True)
-    status = models.CharField(verbose_name='Статус',
-                              max_length=10,
-                              choices=STATUS_CHOICES,
-                              default='draft')
+    status_post = models.CharField(verbose_name='Статус',
+                                   max_length=10,
+                                   choices=STATUS_CHOICES,
+                                   default='draft')
+    # Model manager
+    # Менеджер модели
+    published = PublishedManager()
 
     class Meta:
         ordering = ('-date_published',)
@@ -62,23 +64,6 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
-
-    def slugify(self, s):
-        """
-        Overriding the standard slugify () function, which also allows
-        the use of Russian words in slug.
-        Переопределение стандартной функции slugify(), позволяющей также
-        использовать русские слова в slug.
-        """
-        ALPHABET_RU = {'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g',
-                       'д': 'd', 'е': 'e', 'ё': 'yo', 'ж': 'zh',
-                       'з': 'z', 'и': 'i', 'й': 'j', 'к': 'k',
-                       'л': 'l', 'м': 'm', 'н': 'n', 'о': 'o',
-                       'п': 'p', 'р': 'r', 'с': 's', 'т': 't',
-                       'у': 'u', 'ф': 'f', 'х': 'kh', 'ц': 'ts',
-                       'ч': 'ch', 'ш': 'sh', 'щ': 'shch', 'ы': 'i',
-                       'э': 'e', 'ю': 'yu', 'я': 'ya'}
-        return slugify_ru(''.join(ALPHABET_RU.get(w, w) for w in s.lower()))
 
     def save(self, *args, **kwargs):
         """
