@@ -4,9 +4,9 @@ from .models import Post
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'date_published', 'status_post')
-    list_filter = ('status_post', 'created', 'date_published', 'author')
+    list_display = ('title', 'author', 'date_published', 'status')
+    list_filter = ('status', 'created', 'date_published', 'author')
     search_fields = ('title', 'body')
     prepopulated_fields = {'slug': ('title',)}
     date_hierarchy = 'date_published'
-    ordering = ('status_post', 'date_published')
+    ordering = ('status', 'date_published')

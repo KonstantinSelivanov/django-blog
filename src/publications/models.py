@@ -48,10 +48,10 @@ class Post(models.Model):
                                    auto_now_add=True)
     updated = models.DateTimeField(verbose_name='Дата обновления поста',
                                    auto_now=True)
-    status_post = models.CharField(verbose_name='Статус',
-                                   max_length=10,
-                                   choices=STATUS_CHOICES,
-                                   default='draft')
+    status = models.CharField(verbose_name='Статус',
+                              max_length=10,
+                              choices=STATUS_CHOICES,
+                              default='draft')
     # Model manager
     # Менеджер модели
     published = PublishedManager()

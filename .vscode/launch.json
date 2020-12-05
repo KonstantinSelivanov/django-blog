@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "name": "Python: Django",
+            "type": "python",
+            "request": "launch",
+            "program": "/home/user/git/django-clean-blog/src/manage.py",
+            "args": [
+                "runserver"
+            ],
+            "django": true
+        }
+    ]
+}

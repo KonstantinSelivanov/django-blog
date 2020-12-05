@@ -19,4 +19,4 @@ def post_list(request):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
 
-    return render(request, 'index.html', {'page': page, 'posts': posts})
+    return render(request, 'publications/list.html', {'page': page, 'posts': posts})
