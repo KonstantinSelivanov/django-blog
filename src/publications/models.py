@@ -23,6 +23,24 @@ class PublishedManager(models.Manager):
             .filter(status='published')
 
 
+class Category(models.Model):
+    """
+    
+    """
+    category = models.CharField(verbose_name='Категория',
+                                max_length=15,
+                                blank=False)
+
+    class Meta:
+        verbose_name = 'категория'
+        verbose_name_plural = 'категории'
+        db_table = 'category'
+
+    def get_short_name(self):
+        """Return the short name for the user."""
+        return self.category
+
+
 class Post(models.Model):
     """
     Data model for blog posts.
@@ -41,6 +59,10 @@ class Post(models.Model):
                                verbose_name='Автор поста',
                                on_delete=models.CASCADE,
                                related_name='publications_posts')
+    category = models.ForeignKey(Category,
+                                 verbose_name='Категория',
+                                 on_delete=models.CASCADE,
+                                 related_name='publications_category')
     body = models.TextField(verbose_name='Содержание поста')
     date_published = models.DateTimeField(verbose_name='Дата публикации поста',
                                           default=timezone.now)
@@ -85,4 +107,11 @@ class Post(models.Model):
         The function generates direct links.
         Функция формирует прямые ссылки.
         """
-        return reverse('publications:post_detail', args=[self.id, self.slug])
+        return reverse('publications:post_detail',
+                       args=[self.date_published.year,
+                             self.date_published.month,
+                             self.date_published.day,
+                             self.slug])
+
+
+

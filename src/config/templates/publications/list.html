@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
+                        {% for post in posts %}
                         <div class="content-grid-info">
                             <div class="post-info">
-                                {% for post in posts %}
-                                <h4><a href="{{ post.get_absolute_url }}">{{ post.title }}</a> {{ post.date_published }} / 27 Comments</h4>
-                                <p>{{ post.body|truncatewords_html:200|safe }}</p>
-                                <a href="detail.html"><span></span>READ MORE</a>
-                                {% endfor %}
+                                <h4><a href="{{ post.get_absolute_url }}">{{ post.title }}</a> {{ post.date_published }} / Автор: {{ post.author }}</h4>
+
+                                <p>{{ post.body|truncatewords_html:50|safe }}</p>
+                                <a href="{{ post.get_absolute_url }}"><span></span>Читать дальше</a>
                             </div>
                         </div>
+                        {% endfor %}
 {% endblock content %}
