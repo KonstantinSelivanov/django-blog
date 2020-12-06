@@ -1,6 +1,8 @@
 from django import template
 
 from .models import Post
+from django.shortcuts import get_object_or_404
+from taggit.models import Tag
 
 
 # A module-level variable named register, which is an instance
@@ -16,3 +18,11 @@ def total_posts():
     # Returns the number of posts published
     # Возвращает количество опубликованных постов
     return Post.published.count()
+
+
+def filter_post_by_tag(tag_slug, post):
+    tag = None
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        post = post.filter(tags__in=[tag])
+    return post, tag

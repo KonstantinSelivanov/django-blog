@@ -3,10 +3,13 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 
-from taggit.managers import TaggableManager
-from taggit.models import Tag
+from django.utils.text import slugify
+from django.template.defaultfilters import slugify
 
-from .services import slugify
+from taggit.managers import TaggableManager
+from taggit.models import TagBase
+
+from unidecode import unidecode
 
 
 class PublishedManager(models.Manager):
@@ -108,7 +111,7 @@ class Post(models.Model):
         происходит сохранение объекта поста.
         """
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(unidecode(self.title))
         super(Post, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -121,14 +124,3 @@ class Post(models.Model):
                              self.date_published.month,
                              self.date_published.day,
                              self.slug])
-
-
-class Tag(taggit.models.Tag):
-
-    def get_absolute_url(self):
-        """
-        The function generates direct links.
-        Функция формирует прямые ссылки.
-        """
-        return reverse('publications:post_list',
-                       args=[self.slug])
