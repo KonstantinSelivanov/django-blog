@@ -3,13 +3,18 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 
+from taggit.managers import TaggableManager
+from taggit.models import Tag
+
 from .services import slugify
 
 
 class PublishedManager(models.Manager):
     """
     Own model manager.
+    Only published posts will be displayed.
     Собственный менеджер модели.
+    Будут отображаться только опубликованные посты.
     """
     def get_queryset(self):
         """
@@ -25,7 +30,8 @@ class PublishedManager(models.Manager):
 
 class Category(models.Model):
     """
-    
+    Model data categories blog publications.
+    Модель данных категорий постов блога.
     """
     category = models.CharField(verbose_name='Категория',
                                 max_length=15,
@@ -36,15 +42,14 @@ class Category(models.Model):
         verbose_name_plural = 'категории'
         db_table = 'category'
 
-    def get_short_name(self):
-        """Return the short name for the user."""
+    def __str__(self):
         return self.category
 
 
 class Post(models.Model):
     """
     Data model for blog posts.
-    Модель данных для публикаций блога.
+    Модель данных для постов блога.
     """
     STATUS_CHOICES = (
         ('draft', 'черновик'),
@@ -77,6 +82,10 @@ class Post(models.Model):
     # Model manager
     # Менеджер модели
     published = PublishedManager()
+
+    # Manager tags
+    # Менеджер тегов
+    tags = TaggableManager()
 
     class Meta:
         ordering = ('-date_published',)
@@ -114,4 +123,12 @@ class Post(models.Model):
                              self.slug])
 
 
+class Tag(taggit.models.Tag):
 
+    def get_absolute_url(self):
+        """
+        The function generates direct links.
+        Функция формирует прямые ссылки.
+        """
+        return reverse('publications:post_list',
+                       args=[self.slug])

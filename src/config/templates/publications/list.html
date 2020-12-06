@@ -5,11 +5,18 @@
                         {% for post in posts %}
                         <div class="content-grid-info">
                             <div class="post-info">
-                                <h4><a href="{{ post.get_absolute_url }}">{{ post.title }}</a> {{ post.date_published }} / Автор: {{ post.author }}</h4>
-
-                                <p>{{ post.body|truncatewords_html:50|safe }}</p>
+                                <h4><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h4>
+                                <p>{{ post.date_published }} / Автор: {{ post.author }}</p>
+                                <p>Категория: <a href="{{ . }}">{{ post.category }}</a>
+                                <p>Теги:
+                                {% for tag in post.tags.all %}
+                                    <a href="{% url "publications:post_list_by_tag" tag.slug %}">{{ tag.name }}</a>
+                                    {% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                                <p>{{ post.body|truncatewords:50|safe }}</p>
                                 <a href="{{ post.get_absolute_url }}"><span></span>Читать дальше</a>
                             </div>
                         </div>
                         {% endfor %}
+                        {% include 'publications/pagination.html' with page=posts %}
 {% endblock content %}

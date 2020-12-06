@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #
+    'taggit',
     # Applications
     'publications.apps.PublicationsConfig',
 ]
@@ -80,7 +82,8 @@ TEMPLATES = [
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, 'static')]
 # For prod
-# STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static') 
+# STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+STATIC_ROOT = 'config/static'
 
 MEDIA_URL = '/media/'
 
@@ -138,3 +141,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+# Tag setings. Without register
+TAGGIT_CASE_INSENSITIVE = True
