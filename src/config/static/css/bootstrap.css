@@ -4960,7 +4960,8 @@ select[multiple].input-group-sm>.input-group-btn>.btn {
     padding: 5px 14px;
     background-color: #fff;
     border: 1px solid #ddd;
-    border-radius: 15px;
+    /* border-radius: 15px; */
+    /* border-radius: 50px 0 0 50px; */
 }
 
 .pagination>li:first-child>a,

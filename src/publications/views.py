@@ -1,10 +1,9 @@
-from django.shortcuts import render, get_object_or_404
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-
+from django.shortcuts import get_object_or_404, render
 from taggit.models import Tag
 
 from .models import Post
-from .tag_services import filter_post_by_tag
+from .services import filter_post_by_tag
 
 
 def post_list(request, tag_slug=None):
@@ -12,12 +11,10 @@ def post_list(request, tag_slug=None):
     A web service displaying all published posts.
     Веб-сервис, отображающих все опубликованные посты.
     """
-
     post = Post.published.all()
-    
     post, tag = filter_post_by_tag(tag_slug, post)
-
-    paginator = Paginator(post, 3)
+    number_of_post = 3
+    paginator = Paginator(post, number_of_post)
     page = request.GET.get('page')
     try:
         posts = paginator.page(page)
@@ -29,8 +26,6 @@ def post_list(request, tag_slug=None):
     return render(request, 'publications/list.html', {'page': page,
                                                       'posts': posts,
                                                       'tag': tag})
-
-
 
 
 def post_detail(request, year, month, day, slug):

@@ -4,6 +4,7 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
+{% load tags_services %}
 {% load static %}
 <!DOCTYPE html>
 <html>
@@ -66,9 +67,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 </div>
                 <span class="menu"> </span>
                 <ul>
-                    <li class="active"><a href="base.html">Главная</a></li>
-                    <li><a href="about.html">ABOUT</a></li>
-                    <li><a href="contact.html">CONTACT</a></li>
+                    <li class="active"><a href="base.html">ГЛАВНАЯ</a></li>
+                    <li><a href="about.html">ОБО МНЕ</a></li>
+                    <li><a href="contact.html">КОНТАКТЫ</a></li>
                     <div class="clearfix"> </div>
                 </ul>
             </div>
@@ -94,14 +95,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <div class="recent">
                         <h3>НЕДАВНИЕ ПОСТЫ</h3>
                         <ul>
-                            <li><a href="#">Aliquam tincidunt mauris</a></li>
-                            <li><a href="#">Vestibulum auctor dapibus  lipsum</a></li>
-                            <li><a href="#">Nunc dignissim risus consecu</a></li>
-                            <li><a href="#">Cras ornare tristiqu</a></li>
+                            {% show_latest_posts 3 %}
                         </ul>
                     </div>
                     <div class="comments">
-                        <h3>RECENT COMMENTS</h3>
+                        <h3>НЕДАВНИЕ КОММЕНТАРИИ</h3>
                         <ul>
                             <li><a href="#">Amada Doe </a> on <a href="#">Hello World!</a></li>
                             <li><a href="#">Peter Doe </a> on <a href="#"> Photography</a></li>
@@ -110,7 +108,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     </div>
                     <div class="clearfix"></div>
                     <div class="archives">
-                        <h3>ARCHIVES</h3>
+                        <h3>АРХИВЫ</h3>
                         <ul>
                             <li><a href="#">October 2013</a></li>
                             <li><a href="#">September 2013</a></li>
@@ -119,7 +117,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         </ul>
                     </div>
                     <div class="categories">
-                        <h3>CATEGORIES</h3>
+                        <h3>КАТЕГОРИИ</h3>
                         <ul>
                             <li><a href="#">Vivamus vestibulum nulla</a></li>
                             <li><a href="#">Integer vitae libero ac risus e</a></li>
