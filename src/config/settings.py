@@ -14,8 +14,7 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-PROJECT_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                            os.pardir) + '/config/'
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -39,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #
+    'widget_tweaks',
     'unidecode',
     'taggit',
     # Applications
@@ -62,7 +62,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(PROJECT_ROOT, 'templates')],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -81,10 +81,8 @@ TEMPLATES = [
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, 'static')]
-# For prod
-# STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
-STATIC_ROOT = 'config/static'
+
+STATIC_ROOT = 'static'
 
 MEDIA_URL = '/media/'
 

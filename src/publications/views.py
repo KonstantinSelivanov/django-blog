@@ -1,9 +1,12 @@
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import get_object_or_404, render
 from taggit.models import Tag
+from django.contrib import messages
+from django.db.models import Count
 
-from .models import Post
-from .services import filter_post_by_tag
+from .models import Post, Comment
+from .forms import CommentForm
+from .services import filter_post_by_tag, add_new_comment_to_post
 
 
 def post_list(request, tag_slug=None):
@@ -38,5 +41,26 @@ def post_detail(request, year, month, day, slug):
                              date_published__month=month,
                              date_published__day=day)
 
+    # new_comment, comment_form = add_new_comment_to_post(post, request)
+    print(post)
+    comments = post.publications_comments.filter(moderation=True)
+    print(comments.count)
+    new_comment = None
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.post = post
+            new_comment.save()
+            messages.success(request, 'Коментарий успешно добавлен')
+        else:
+            messages.error(request, comment_form.errors)
+    else:
+        comment_form = CommentForm()
+    # return {'new_comment': new_comment, 'comment_form': comment_form}
 
-    return render(request, 'publications/detail.html', {'post': post})
+
+    return render(request, 'publications/detail.html',
+                           {'post': post,
+                            'new_comment': new_comment,
+                            'comment_form': comment_form})

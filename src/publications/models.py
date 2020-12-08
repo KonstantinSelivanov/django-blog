@@ -124,3 +124,35 @@ class Post(models.Model):
                              self.date_published.month,
                              self.date_published.day,
                              self.slug])
+
+
+class Comment(models.Model):
+    """
+    Comment model
+    Модель комментариев
+    """
+    post = models.ForeignKey(Post,
+                             verbose_name='Пост',
+                             on_delete=models.CASCADE,
+                             related_name='publications_comments')
+    author = models.CharField(verbose_name='Имя', max_length=80)
+    email = models.EmailField(verbose_name='e-mail')
+    body = models.TextField(verbose_name='Коментарий')
+    created = models.DateTimeField(verbose_name='Дата создания комментария',
+                                   auto_now_add=True)
+    updated = models.DateTimeField(verbose_name='Дата изменения комментария',
+                                   auto_now=True)
+    moderation = models.BooleanField(verbose_name='Модерация', default=True)
+
+    class Meta:
+        ordering = ('created',)
+        verbose_name = 'Коментарий'
+        verbose_name_plural = 'Коментарии'
+        db_table = 'comments'
+
+    def __str__(self):
+        """
+        The method returns the display of the object in a understandable way.
+        Метод возвращает отображение объекта понятном виде.
+        """
+        return 'Коментарий от {} на {}'.format(self.author, self.post)

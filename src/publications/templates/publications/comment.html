@@ -1,0 +1,24 @@
+{% load tags_services %} {% load widget_tweaks %} {% load static %}
+
+                {% comment %} Displaying a comment form or message about a successfully created comment {% endcomment %}
+                {% comment %} Отображение формы комментариев или сообщения об упешно созданном коментарии {% endcomment %}
+                {% if new_comment %}
+                    <h2>Ваш комментарий был добавлен</h2>
+                {% else %}
+                    <h2>Добавить новый комментарий</h2>
+                    <div class="content-form">
+                    <form action="." method="post">          
+                        {% csrf_token %}
+                        {% for field in comment_form.visible_fields %}
+                            
+                                {{ field.label_tag }}
+                                {% render_field field class="form-control" %}
+                                {% if field.help_text %}
+                                <small class="form-text text-muted">{{ field.help_text }}</small>
+                                {% endif %}
+                            
+                        {% endfor %}
+                        <p><input type="submit" value="ОТПРАВИТЬ"></p>
+                    </form>
+                    </div>
+                {% endif %}
