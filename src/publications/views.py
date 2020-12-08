@@ -62,5 +62,6 @@ def post_detail(request, year, month, day, slug):
 
     return render(request, 'publications/detail.html',
                            {'post': post,
+                            'comments': comments,
                             'new_comment': new_comment,
                             'comment_form': comment_form})
