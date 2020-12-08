@@ -6,6 +6,7 @@ from django import template
 from .models import Comment, Category
 from .forms import CommentForm
 from django.contrib import messages
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 
 
@@ -22,16 +23,38 @@ def filter_post_by_tag(tag_slug, post) -> Union[list, str]:
 
 
 def filter_post_by_category(category_slug, post) -> Union[list, str]:
+    """
+    Filter blog posts by category.
+    Фильтрация постов блога по категории.
+    """
     category = None
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
-        print(category)
         post = post.filter(category__in=[category])
-        print(post)
     return post, category
 
 
-def add_new_comment_to_post(request, post):
+def posts_pagination(post, number_of_post: int, request) -> Union[list, str]:
+    """
+    Blog post pagination
+    Пагинация постов блога
+    """
+    paginator = Paginator(post, number_of_post)
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    return page, posts
+
+
+def add_new_comment_to_post(request, post) -> Union[Comment, CommentForm]:
+    """
+    Add new comment to post
+    Добавление нового комментария к посту
+    """
     new_comment = None
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST)
