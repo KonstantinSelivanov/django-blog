@@ -39,6 +39,9 @@ class Category(models.Model):
     category = models.CharField(verbose_name='Категория',
                                 max_length=15,
                                 blank=False)
+    slug = models.SlugField(max_length=250,
+                            blank=True,
+                            unique_for_date='category')
 
     class Meta:
         verbose_name = 'категория'
@@ -47,6 +50,29 @@ class Category(models.Model):
 
     def __str__(self):
         return self.category
+
+    def save(self, *args, **kwargs):
+        """
+        Overridden standard save() function. Serves for automatic slug
+        creation. If the post has no slug, the slugify() function
+        automatically forms it from the passed header, after which
+        the post object is saved.
+        Переопределенная стандартная функция save(). Служит для автоматического
+        формирования slug. Если у поста нет слага, функция slugify()
+        автоматически формирует его из переданного заголовка, после чего
+        происходит сохранение объекта поста.
+        """
+        if not self.slug:
+            self.slug = slugify(unidecode(self.category))
+        super(Category, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        """
+        The function generates direct links.
+        Функция формирует прямые ссылки.
+        """
+        return reverse('publications:post_category',
+                       args=[self.slug])
 
 
 class Post(models.Model):

@@ -1,0 +1,9 @@
+                            <li><a href="#">Vivamus vestibulum nulla</a></li>
+                            <li><a href="#">Integer vitae libero ac risus e</a></li>
+                            <li><a href="#">Vestibulum commo</a></li>
+                            <li><a href="#">Cras iaculis ultricies</a></li>
+                        <ul>
+                        {% for category in categories %}
+                            <li><a href="{{ category.get_absolute_url }}">{{ category.category }}</a></li>
+                        {% endfor %}
+                        </ul>

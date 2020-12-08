@@ -1,6 +1,7 @@
 from django import template
 
 from ..models import Post
+from publications.models import Category
 
 
 # A module-level variable named register, which is an instance
@@ -20,6 +21,19 @@ def total_posts():
 
 
 @register.inclusion_tag('publications/latest_posts.html')
-def show_latest_posts(count=5):
+def show_latest_posts(count: int):
+    """
+    Display tag for recent blog posts
+    Тег отображения последних статей блога
+    """
     latest_posts = Post.published.order_by('-date_published')[:count]
     return {'latest_posts': latest_posts}
+
+
+# @register.inclusion_tag('publications/category.html')
+# def show_all_categories(slug):
+
+#     categories = Category.objects.all()
+#     print(categories)
+
+#     return {'categories': categories}

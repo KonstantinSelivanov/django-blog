@@ -258,7 +258,7 @@ label {
 }
 
 .recent li a,
-.comments ul li a,
+.comments ul li a p,
 .archives ul li a,
 .categories ul li a {
     color: #7C7C7C;
@@ -524,6 +524,13 @@ label {
 
 ul.comment-list {
     border: 1px solid #BAB6B6;
+    padding: 2em;
+    margin: 3em 0;
+    list-style: none;
+}
+
+ul.comments-list {
+    /* border: 1px solid #BAB6B6; */
     padding: 2em;
     margin: 3em 0;
     list-style: none;

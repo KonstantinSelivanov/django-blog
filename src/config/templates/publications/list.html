@@ -6,8 +6,16 @@
                         <div class="content-grid-info">
                             <div class="post-info">
                                 <h4><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h4>
-                                <p>{{ post.date_published }} / Автор: {{ post.author }}</p>
-                                <p>Категория: <a href="{{ . }}">{{ post.category }}</a>
+                                <p>Автор: {{ post.author }}  {{ post.date_published }}</p>
+                                <p> Категория 
+                                <a href="{% url 'publications:post_category1' category.slug %}">{{ post.category }}</a>
+                                    {% if not forloop.last %}, {% endif %}
+                                {% comment %} <p>Категория: <a href="{% url "publications:post_category1"  %}">{{ post.category }}</a> {% endcomment %}
+                                {% comment %} {% for category in post.category.all %}
+                                    <a href="{% url "publications:post_list_by_category" tag.slug %}">{{ tag.name }}</a>
+                                    {% if not forloop.last %}, {% endif %}
+                                {% endfor %} category.slug{% endcomment %}
+                                 
                                 <p>Теги:
                                 {% for tag in post.tags.all %}
                                     <a href="{% url "publications:post_list_by_tag" tag.slug %}">{{ tag.name }}</a>

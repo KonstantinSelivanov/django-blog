@@ -3,12 +3,10 @@ from django.shortcuts import get_object_or_404
 from taggit.models import Tag
 from django import template
 
-from .models import Comment
-from publications.forms import CommentForm
+from .models import Comment, Category
+from .forms import CommentForm
 from django.contrib import messages
 
-
-register = template.Library()
 
 
 def filter_post_by_tag(tag_slug, post) -> Union[list, str]:
@@ -23,13 +21,21 @@ def filter_post_by_tag(tag_slug, post) -> Union[list, str]:
     return post, tag
 
 
-# @register.inclusion_tag('publications/comment.html')
-def add_new_comment_to_post(post, request):
-    comments = post.publications_comments.filter(moderation=True)
+def filter_post_by_category(category_slug, post) -> Union[list, str]:
+    category = None
+    if category_slug:
+        category = get_object_or_404(Category, slug=category_slug)
+        print(category)
+        post = post.filter(category__in=[category])
+        print(post)
+    return post, category
+
+
+def add_new_comment_to_post(request, post):
     new_comment = None
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST)
-        if comment_form.is_valid:
+        if comment_form.is_valid():
             new_comment = comment_form.save(commit=False)
             new_comment.post = post
             new_comment.save()
@@ -38,4 +44,4 @@ def add_new_comment_to_post(post, request):
             messages.error(request, comment_form.errors)
     else:
         comment_form = CommentForm()
-    # return {'new_comment': new_comment, 'comment_form': comment_form}
+    return new_comment, comment_form

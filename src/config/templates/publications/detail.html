@@ -19,10 +19,5 @@
                             <div class="clearfix"></div>
                         </li>
                     </ul>
-                    {% with comments.count as total_comments %}
-                        <h2>{{ total_comments }} comment{{ total_comments|pluralize }}</h2>
-                    {% endwith %}
-
-
-                    {% comment %} {% include 'publications/comment.html' with comment_form=comment_form %} {% endcomment %}
+                    {% include 'publications/comment.html' with comment_form=comment_form %}
 {% endblock content %}

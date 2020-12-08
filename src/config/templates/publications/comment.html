@@ -1,11 +1,22 @@
 {% load tags_services %} {% load widget_tweaks %} {% load static %}
+                {% comment %} List of comments {% endcomment %}
+                {% comment %} Список комментариев {% endcomment %}
+                <h2>Комментарии</h2>
+                {% for comment in comments%}
+                    <ul class="comment-list">
+                        <h5 class="post-author_head">Автор {{ comment.author}} {{ comment.created }}</h5>
+                        <li><img src="{% static 'images/avatar.png'%}" class="img-responsive" alt="">{{ comment.body|linebreaks}}
+                            <div class="clearfix"></div>
+                        </li>
+                    </ul>
+                {% endfor %} 
 
                 {% comment %} Displaying a comment form or message about a successfully created comment {% endcomment %}
                 {% comment %} Отображение формы комментариев или сообщения об упешно созданном коментарии {% endcomment %}
                 {% if new_comment %}
                     <h2>Ваш комментарий был добавлен</h2>
                 {% else %}
-                    <h2>Добавить новый комментарий</h2>
+                    <h2>Добавить новый комментарий</h2><br>
                     <div class="content-form">
                     <form action="." method="post">          
                         {% csrf_token %}
