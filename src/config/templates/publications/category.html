@@ -1,3 +1,4 @@
+{% load tags_services %} 
                             {% for cat in category %}
                                 <li><a href="{{ category.get_absolute_url }}">{{ cat.category }}</a></li>
                             {% endfor %}

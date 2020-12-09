@@ -1,6 +1,7 @@
 from django import template
 
 from ..models import Post, Category
+from django.shortcuts import get_object_or_404
 
 
 # A module-level variable named register, which is an instance
@@ -27,3 +28,9 @@ def show_latest_posts(count: int):
     """
     latest_posts = Post.published.order_by('-date_published')[:count]
     return {'latest_posts': latest_posts}
+
+
+@register.inclusion_tag('publications/category.html')
+def show_list_category(category_slug=None):
+    category = Category.category_manager.all()
+    return {'category': category}

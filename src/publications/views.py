@@ -17,6 +17,11 @@ def post_list(request, tag_slug=None, category_slug=None):
     post, tag = filter_post_by_tag(tag_slug, post)
     post, category = filter_post_by_category(category_slug, post)
     page, posts = paginate_posts_page(post, 3, request)
+    
+    # category = None
+    # if category_slug:
+    #     category = get_object_or_404(Category, slug=category_slug)
+    #     post = post.filter(category__in=[category])
 
     return render(request, 'publications/list.html', {'page': page,
                                                       'posts': posts,
@@ -37,13 +42,14 @@ def post_detail(request, year, month, day, slug):
     new_comment, comment_form = add_new_comment_to_post(request, post)
     similar_posts = get_similar_posts(post, 4)
 
-    category = Category.category_manager.all()
-    print(category)
+    
+    # post, category = filter_post_by_category(category, post)
+    # filter(category__in=[category])
+    # print(category)
 
     return render(request, 'publications/detail.html',
                            {'post': post,
                             'comments': comments,
                             'new_comment': new_comment,
                             'comment_form': comment_form,
-                            'similar_posts': similar_posts,
-                            'category': category})
+                            'similar_posts': similar_posts})

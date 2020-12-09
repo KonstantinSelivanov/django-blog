@@ -13,7 +13,7 @@
                             </div>
                             <div class="clearfix"></div>
                         </li>
-                        {% for category in categories %}
+                        {% comment %} {% for category in categories %}
                             <li><a href="{{ category.get_absolute_url }}">{{ category.category }}</a></li>
-                        {% endfor %}
+                        {% endfor %} {% endcomment %}
                     </ul>

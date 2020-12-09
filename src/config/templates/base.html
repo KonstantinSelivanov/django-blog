@@ -118,7 +118,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <div class="categories">
                         <h3>КАТЕГОРИИ</h3>
                         <ul>
-                            {% include 'publications/category.html'%}
+                            {% show_list_category %}
+                            {% comment %} {% include 'publications/category.html'%} {% endcomment %}
                         </ul>
                     </div>
                     <div class="clearfix"></div>
