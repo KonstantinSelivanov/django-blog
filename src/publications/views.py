@@ -1,13 +1,11 @@
 
 from django.shortcuts import get_object_or_404, render
-from taggit.models import Tag
-from django.contrib import messages
-from django.db.models import Count
 
 from .models import Post, Comment, Category
 from .forms import CommentForm
 from .services import (filter_post_by_tag, filter_post_by_category,
-                       add_new_comment_to_post, posts_pagination)
+                       add_new_comment_to_post, paginate_posts_page,
+                       get_similar_posts)
 
 
 def post_list(request, tag_slug=None, category_slug=None):
@@ -18,7 +16,7 @@ def post_list(request, tag_slug=None, category_slug=None):
     post = Post.published.all()
     post, tag = filter_post_by_tag(tag_slug, post)
     post, category = filter_post_by_category(category_slug, post)
-    page, posts = posts_pagination(post, 3, request)
+    page, posts = paginate_posts_page(post, 3, request)
 
     return render(request, 'publications/list.html', {'page': page,
                                                       'posts': posts,
@@ -37,9 +35,15 @@ def post_detail(request, year, month, day, slug):
                              date_published__day=day)
     comments = post.publications_comments.filter(moderation=True)
     new_comment, comment_form = add_new_comment_to_post(request, post)
+    similar_posts = get_similar_posts(post, 4)
+
+    category = Category.category_manager.all()
+    print(category)
 
     return render(request, 'publications/detail.html',
                            {'post': post,
                             'comments': comments,
                             'new_comment': new_comment,
-                            'comment_form': comment_form})
+                            'comment_form': comment_form,
+                            'similar_posts': similar_posts,
+                            'category': category})

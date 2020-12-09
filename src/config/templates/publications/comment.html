@@ -1,16 +1,22 @@
 {% load tags_services %} {% load widget_tweaks %} {% load static %}
                 {% comment %} List of comments {% endcomment %}
                 {% comment %} Список комментариев {% endcomment %}
-                <h2>Комментарии</h2>
-                {% for comment in comments%}
                     <ul class="comment-list">
-                        <h5 class="post-author_head">Автор {{ comment.author}} {{ comment.created }}</h5>
-                        <li><img src="{% static 'images/avatar.png'%}" class="img-responsive" alt="">{{ comment.body|linebreaks}}
+                        <h5 class="post-author_head">Комментарии</h5>
+                        <li>
+                            <div class="desc">
+                                {% for comment in comments%}
+                                    <ul class="comment-list">
+                                        <h5 class="post-author_head">Автор {{ comment.author}} {{ comment.created }}</h5>
+                                        <li><img src="{% static 'images/avatar.png'%}" class="img-responsive" alt="">{{ comment.body|linebreaks}}
+                                            <div class="clearfix"></div>
+                                        </li>
+                                    </ul>
+                                {% endfor %} 
+                            </div>
                             <div class="clearfix"></div>
                         </li>
                     </ul>
-                {% endfor %} 
-
                 {% comment %} Displaying a comment form or message about a successfully created comment {% endcomment %}
                 {% comment %} Отображение формы комментариев или сообщения об упешно созданном коментарии {% endcomment %}
                 {% if new_comment %}
@@ -18,16 +24,14 @@
                 {% else %}
                     <h2>Добавить новый комментарий</h2><br>
                     <div class="content-form">
-                    <form action="." method="post">          
+                    <form action="." method="post">
                         {% csrf_token %}
                         {% for field in comment_form.visible_fields %}
-                            
                                 {{ field.label_tag }}
                                 {% render_field field class="form-control" %}
                                 {% if field.help_text %}
                                 <small class="form-text text-muted">{{ field.help_text }}</small>
                                 {% endif %}
-                            
                         {% endfor %}
                         <p><input type="submit" value="ОТПРАВИТЬ"></p>
                     </form>

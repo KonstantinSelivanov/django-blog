@@ -26,9 +26,9 @@ class PublishedManager(models.Manager):
         Возвращает QuerySet с фильтром по status='published'. Будет возвращен
         QuerySet с опубликованными постами.
         """
-        # return super(PublishedManager, self) \
-        #     .get_queryset() \
-        #     .filter(status='published')
+        return super(PublishedManager, self) \
+            .get_queryset() \
+            .filter(status='published')
         return super(PublishedManager, self).get_queryset()
 
 
@@ -43,6 +43,7 @@ class Category(models.Model):
     slug = models.SlugField(max_length=250,
                             blank=True,
                             unique='category')
+    category_manager = models.Manager()
 
     class Meta:
         verbose_name = 'категория'

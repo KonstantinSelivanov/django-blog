@@ -10,14 +10,6 @@
                         <h2> {{ post.title }} </h2>
                         <p>{{ post.body|safe }}</p>
                     </div>
-                    <ul class="comment-list">
-                        <h5 class="post-author_head">Автор <a href="#" title="Автор {{ post.author }}" rel="author">{{ post.author }}</a></h5>
-                        <li><img src="{% static 'images/avatar.png'%}" class="img-responsive" alt="">
-                            <div class="desc">
-                                <p>Просмотреть все сообщения от: <a href="#" title="Автор {{ post.author }}" rel="author">{{ post.author }}</a></p>
-                            </div>
-                            <div class="clearfix"></div>
-                        </li>
-                    </ul>
+                    {% include 'publications/similar_posts.html' %}
                     {% include 'publications/comment.html' with comment_form=comment_form %}
 {% endblock content %}

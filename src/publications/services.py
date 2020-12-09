@@ -2,15 +2,15 @@ from typing import Union
 from django.shortcuts import get_object_or_404
 from taggit.models import Tag
 from django import template
+from django.db.models import Count
 
-from .models import Comment, Category
+from .models import Comment, Category, Post
 from .forms import CommentForm
 from django.contrib import messages
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 
-
-def filter_post_by_tag(tag_slug, post) -> Union[list, str]:
+def filter_post_by_tag(tag_slug: str, post: list) -> Union[list, str]:
     """
     Filter blog posts by tag.
     Фильтрация постов блога по тегу.
@@ -22,7 +22,8 @@ def filter_post_by_tag(tag_slug, post) -> Union[list, str]:
     return post, tag
 
 
-def filter_post_by_category(category_slug, post) -> Union[list, str]:
+def filter_post_by_category(category_slug: str,
+                            post: list) -> Union[list, str]:
     """
     Filter blog posts by category.
     Фильтрация постов блога по категории.
@@ -34,7 +35,9 @@ def filter_post_by_category(category_slug, post) -> Union[list, str]:
     return post, category
 
 
-def posts_pagination(post, number_of_post: int, request) -> Union[list, str]:
+def paginate_posts_page(post: list,
+                        number_of_post: int,
+                        request) -> Union[list, str]:
     """
     Blog post pagination
     Пагинация постов блога
@@ -50,7 +53,58 @@ def posts_pagination(post, number_of_post: int, request) -> Union[list, str]:
     return page, posts
 
 
-def add_new_comment_to_post(request, post) -> Union[Comment, CommentForm]:
+def get_similar_posts(post: list, count_post: int) -> list:
+    # Formation of a list of related posts by tags
+    # Getting all the current post ID tags. Getting a flat list - flat=True
+    # Формирование списка похожих статей по тегам. Получение всех ID тегов
+    # текущей статьи. Получение плоского списка - flat=True
+    post_tags_ids = post.tags.values_list('id', flat=True)
+    # Getting all the stations that are associated with at least one tag,
+    # excluding the current post.
+    # Получение всех статьей, которые связаны хотя бы с одним тегом,
+    # исключая текущую статью.
+    similar_posts = Post.published.filter(tags__in=post_tags_ids).\
+        exclude(id=post.id)
+    # Sort the result by the number of tag matches. If two or more posts have
+    # the same set of tags, choose the one that is the newest. Limit the
+    # selection to the number of posts that we want to display
+    # in the featured list. [:4]
+    # Сортировка результата по количеству совпадений тегов. Если две и более
+    # статьи имеют одинаковый набор тегов, выбирать ту из них, которая является
+    # самой новой. Ограничить выборку тем количеством статей, которое мы хотим
+    # отображать в списке рекомендуемых. [:4]
+    similar_posts = similar_posts.annotate(same_tags=Count('tags')).\
+        order_by('-same_tags', '-date_published')[:count_post]
+    return similar_posts
+
+def get_list_category(post: list, count_post: int) -> list:
+    # Formation of a list of related posts by tags
+    # Getting all the current post ID tags. Getting a flat list - flat=True
+    # Формирование списка похожих статей по тегам. Получение всех ID тегов
+    # текущей статьи. Получение плоского списка - flat=True
+    post_category_ids = post.category.values_list('id', flat=True)
+    # Getting all the stations that are associated with at least one tag,
+    # excluding the current post.
+    # Получение всех статьей, которые связаны хотя бы с одним тегом,
+    # исключая текущую статью.
+    similar_posts = Post.published.filter(category__in=post_category_ids).\
+        exclude(id=post.id)
+    # Sort the result by the number of tag matches. If two or more posts have
+    # the same set of tags, choose the one that is the newest. Limit the
+    # selection to the number of posts that we want to display
+    # in the featured list. [:4]
+    # Сортировка результата по количеству совпадений тегов. Если две и более
+    # статьи имеют одинаковый набор тегов, выбирать ту из них, которая является
+    # самой новой. Ограничить выборку тем количеством статей, которое мы хотим
+    # отображать в списке рекомендуемых. [:4]
+    similar_posts = similar_posts.annotate(same_tags=Count('tags')).\
+        order_by('-same_tags', '-date_published')[:count_post]
+    return similar_posts
+
+
+
+def add_new_comment_to_post(request,
+                            post: list) -> Union[Comment, CommentForm]:
     """
     Add new comment to post
     Добавление нового комментария к посту

@@ -138,7 +138,7 @@ label {
 }
 
 .post-info h4 {
-    color: #afafaf;
+    color: #4a5054;
     font-family: 'Lato', sans-serif;
     font-size: 0.8em;
     margin-bottom: 1em;
@@ -161,7 +161,7 @@ label {
 
 .post-info p {
     font-family: 'Lato', sans-serif;
-    color: #9a9da0;
+    color: #4a5054;
     font-size: 0.9em;
     line-height: 1.5em;
     margin-bottom: 0.5em;
@@ -261,7 +261,7 @@ label {
 .comments ul li a p,
 .archives ul li a,
 .categories ul li a {
-    color: #7C7C7C;
+    color: #4a5054;
     /* border-bottom: 1px solid #a6aaae; */
     font-family: 'Lato', sans-serif;
     font-size: 0.9em;
@@ -272,7 +272,8 @@ label {
 }
 
 .comments ul li {
-    color: #7C7C7C;
+    color: #4a5054;
+    /* color: #1b1b1b; */
     font-size: 0.9em;
     border-bottom: none;
     margin: 0 5px;
@@ -294,7 +295,7 @@ label {
 }
 
 .footer p {
-    color: #989898;
+    color: #4a5054;
     font-size: 1em;
 }
 
@@ -303,7 +304,7 @@ label {
 }
 
 .footer p a:hover {
-    color: #989898;
+    color: #4a5054;
 }
 
 
@@ -337,7 +338,7 @@ label {
 .about-grid p,
 .about-grid2 p,
 .who-iam p {
-    color: #7C7C7C;
+    color: #4a5054;
     font-family: 'Lato', sans-serif;
     font-size: 0.95em;
     line-height: 1.8em;
@@ -352,7 +353,7 @@ label {
 
 .about-grid2 li a {
     font-family: 'Lato', sans-serif;
-    color: #9A9598;
+    color: #4a5054;
     font-size: 0.9em;
     text-decoration: none;
 }
@@ -381,7 +382,7 @@ label {
 }
 
 .man-info li {
-    color: #7C7C7C;
+    color: #4a5054;
     font-family: 'Lato', sans-serif;
     font-size: 0.95em;
     margin-left: 2em;
@@ -398,7 +399,7 @@ label {
 }
 
 .contact-info p {
-    color: #7C7C7C;
+    color: #4a5054;
     font-family: 'Lato', sans-serif;
     font-size: 0.95em;
     line-height: 1.8em;
@@ -463,13 +464,13 @@ label {
 
 .company_address p {
     font-size: 1em;
-    color: #7C7C7C;
+    color: #4a5054;
     font-family: 'Lato', sans-serif;
     line-height: 1.8em;
 }
 
 .company_address p a {
-    color: #7C7C7C;
+    color: #4a5054;
 }
 
 .company_address p a:hover {
@@ -511,7 +512,7 @@ label {
 
 .single-grid p {
     font-family: 'Lato', sans-serif;
-    color: #9a9da0;
+    color: #4a5054;
     font-size: 1em;
     line-height: 1.8em;
     margin: 1em 0;
@@ -530,7 +531,7 @@ ul.comment-list {
 }
 
 ul.comments-list {
-    /* border: 1px solid #BAB6B6; */
+    /* border: 1px solid #4a5054; */
     padding: 2em;
     margin: 3em 0;
     list-style: none;
@@ -538,12 +539,12 @@ ul.comments-list {
 
 h5.post-author_head {
     font-size: 1.3em;
-    color: #848484;
+    color: #4a5054;
     margin: 0 0 1em;
 }
 
 h5.post-author_head a {
-    color: #848484;
+    color: #4a5054;
 }
 
 h5.post-author_head a:hover {
@@ -558,7 +559,7 @@ ul.comment-list img {
 
 .desc p {
     font-size: 1.2em;
-    color: #848484;
+    color: #4a5054;
     margin-top: 1em;
     display: inline-block;
     font-family: 'Lato', sans-serif;
@@ -570,7 +571,7 @@ ul.comment-list img {
 }
 
 .desc p a:hover {
-    color: #848484;
+    color: #4a5054;
 }
 
 .content-form form input[type="text"],

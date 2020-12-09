@@ -1,0 +1,19 @@
+{% load static %}
+                    <ul class="comment-list">
+                        <h5 class="post-author_head">Рекомендованные статьи</h5>
+                        <li>
+                            <div class="desc">
+                                    {% for post in similar_posts %}
+                                        <p>
+                                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                                        </p>
+                                    {% empty %}
+                                        <p>Пока нет рекомендованных статей</p>  
+                                    {% endfor %}
+                            </div>
+                            <div class="clearfix"></div>
+                        </li>
+                        {% for category in categories %}
+                            <li><a href="{{ category.get_absolute_url }}">{{ category.category }}</a></li>
+                        {% endfor %}
+                    </ul>
