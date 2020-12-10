@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     #
     'widget_tweaks',
     'unidecode',
+    'captcha',
     'taggit',
     # Applications
     'publications.apps.PublicationsConfig',
@@ -147,3 +148,11 @@ USE_TZ = True
 
 # Tag setings. Without register
 TAGGIT_CASE_INSENSITIVE = True
+
+# Captcha setings
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.random_char_challenge'
+CAPTCHA_IMAGE_SIZE = (150, 50)
+CAPTCHA_FONT_SIZE = (28)
+CAPTCHA_BACKGROUND_COLOR = '#cccccc'
+CAPTCHA_FOREGROUND_COLOR = '#001100'
+CAPTCHA_LENGTH = 6

@@ -1,6 +1,7 @@
 from django.urls import path
 
 from . import views
+from django.conf.urls import url
 # from . import templatetags
 # from publications.templatetags import tags_services
 # from publications.templatetags import tags_services
@@ -12,5 +13,5 @@ urlpatterns = [
          views.post_detail, name='post_detail'),
     path('tag/<slug:tag_slug>/', views.post_list, name='post_list_by_tag'),
     path('category/<slug:category_slug>/',
-         views.post_list, name='post_list_by_category')
+         views.post_list, name='post_list_by_category'),
 ]

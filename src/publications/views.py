@@ -6,6 +6,7 @@ from .forms import CommentForm
 from .services import (filter_post_by_tag, filter_post_by_category,
                        add_new_comment_to_post, paginate_posts_page,
                        get_similar_posts)
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 
 def post_list(request, tag_slug=None, category_slug=None):
@@ -17,11 +18,6 @@ def post_list(request, tag_slug=None, category_slug=None):
     post, tag = filter_post_by_tag(tag_slug, post)
     post, category = filter_post_by_category(category_slug, post)
     page, posts = paginate_posts_page(post, 3, request)
-    
-    # category = None
-    # if category_slug:
-    #     category = get_object_or_404(Category, slug=category_slug)
-    #     post = post.filter(category__in=[category])
 
     return render(request, 'publications/list.html', {'page': page,
                                                       'posts': posts,
@@ -41,11 +37,6 @@ def post_detail(request, year, month, day, slug):
     comments = post.publications_comments.filter(moderation=True)
     new_comment, comment_form = add_new_comment_to_post(request, post)
     similar_posts = get_similar_posts(post, 4)
-
-    
-    # post, category = filter_post_by_category(category, post)
-    # filter(category__in=[category])
-    # print(category)
 
     return render(request, 'publications/detail.html',
                            {'post': post,

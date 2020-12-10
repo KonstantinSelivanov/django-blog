@@ -29,7 +29,6 @@ class PublishedManager(models.Manager):
         return super(PublishedManager, self) \
             .get_queryset() \
             .filter(status='published')
-        return super(PublishedManager, self).get_queryset()
 
 
 class Category(models.Model):
@@ -52,6 +51,8 @@ class Category(models.Model):
 
     def __str__(self):
         return self.category
+
+
 
     def save(self, *args, **kwargs):
         """

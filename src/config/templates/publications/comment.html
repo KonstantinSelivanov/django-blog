@@ -33,6 +33,11 @@
                                 <small class="form-text text-muted">{{ field.help_text }}</small>
                                 {% endif %}
                         {% endfor %}
+                        
+                        {{ comment_form.captcha.errors }}
+                        <script src="{% static 'js/reload_captcha.js' %}"></script>
+                        <a href="" class="captcha-refresh">Не могу распознать текст на картинке. Обновить картинку.</a>
+                        <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
                         <p><input type="submit" value="ОТПРАВИТЬ"></p>
                     </form>
                     </div>

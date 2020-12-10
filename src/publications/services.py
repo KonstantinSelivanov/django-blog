@@ -22,6 +22,7 @@ def filter_post_by_tag(tag_slug: str, post: list) -> Union[list, str]:
     return post, tag
 
 
+
 def filter_post_by_category(category_slug: str,
                             post: list) -> Union[list, str]:
     """
@@ -54,6 +55,10 @@ def paginate_posts_page(post: list,
 
 
 def get_similar_posts(post: list, count_post: int) -> list:
+    """
+    Get a list of related articles by tags.
+    Получение списка похожих статей по тегам.
+    """
     # Formation of a list of related posts by tags
     # Getting all the current post ID tags. Getting a flat list - flat=True
     # Формирование списка похожих статей по тегам. Получение всех ID тегов
@@ -90,6 +95,7 @@ def add_new_comment_to_post(request,
         if comment_form.is_valid():
             new_comment = comment_form.save(commit=False)
             new_comment.post = post
+           # human = True # captcha
             new_comment.save()
             messages.success(request, 'Коментарий успешно добавлен')
         else:

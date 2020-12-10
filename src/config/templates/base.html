@@ -98,11 +98,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         </ul>
                     </div>
                     <div class="comments">
-                        <h3>НЕДАВНИЕ КОММЕНТАРИИ</h3>
+                        <h3>САМЫЕ КОМЕНТИРУЕМЫЕ ПОСТЫ</h3>
+                        {% get_most_commented_posts as most_commanted_posts %}
                         <ul>
-                            <li><a href="#">Amada Doe </a> on <a href="#">Hello World!</a></li>
-                            <li><a href="#">Peter Doe </a> on <a href="#"> Photography</a></li>
-                            <li><a href="#">Steve Roberts  </a> on <a href="#">HTML5/CSS3</a></li>
+                            {% for post in most_commanted_posts %}
+                            <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                            {% endfor %}
                         </ul>
                     </div>
                     <div class="clearfix"></div>
@@ -119,7 +120,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         <h3>КАТЕГОРИИ</h3>
                         <ul>
                             {% show_list_category %}
-                            {% comment %} {% include 'publications/category.html'%} {% endcomment %}
                         </ul>
                     </div>
                     <div class="clearfix"></div>

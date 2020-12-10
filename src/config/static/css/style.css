@@ -1097,3 +1097,17 @@ ul.comment-list img {
         font-size: 1.1em;
     }
 }
+
+.div1 {
+    width: 70%;
+    min-height: 150px;
+    background: #ccc;
+    float: left;
+}
+
+.div2 {
+    width: 30%;
+    min-height: 150px;
+    background: #c00;
+    margin-left: 70%;
+}
