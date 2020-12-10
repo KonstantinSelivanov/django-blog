@@ -95,7 +95,6 @@ def add_new_comment_to_post(request,
         if comment_form.is_valid():
             new_comment = comment_form.save(commit=False)
             new_comment.post = post
-           # human = True # captcha
             new_comment.save()
             messages.success(request, 'Коментарий успешно добавлен')
         else:

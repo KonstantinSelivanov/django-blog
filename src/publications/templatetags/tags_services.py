@@ -30,23 +30,31 @@ def show_latest_posts(count: int):
     latest_posts = Post.published.order_by('-date_published')[:count]
     return {'latest_posts': latest_posts}
 
+
 @register.simple_tag(name='get_most_commented_posts')
 def get_most_commented_posts(count=5):
     """
-    
+    Displays a list of articles with the most comments. The annotate() method
+    is used to add the number of comments to each article. Sorting the result
+    by the number of comments.
+    Отображет список статей с наибольшим количеством комментариев.
+    Метод annotate() служит для добавления к каждой статье количества ее
+    комментариев. Сортировка результата по количеству комментариев.
     """
-    return Post.published.annotate(total_comments=Count('publications_comments')).order_by('-total_comments')[:count]
+    return Post.published.annotate(
+        total_comments=Count('publications_comments')).\
+        order_by('-total_comments')[:count]
 
-#TODO
-@register.inclusion_tag('publications/posts_archives.html')
-def show_posts_archives(count: int):
-    """
-    Displays archived blog posts.
-    Отображает архива постов блога.
-    """
-    posts_archives = Post.published.order_by('-date_published')[:count]
 
-    return {'posts_archives': posts_archives}
+# @register.inclusion_tag('publications/posts_archives.html')
+# def show_posts_archives(count: int):
+#     """
+#     Displays archived blog posts.
+#     Отображает архива постов блога.
+#     """
+#     posts_archives = Post.published.order_by('-date_published')[:count]
+
+#     return {'posts_archives': posts_archives}
 
 
 @register.inclusion_tag('publications/category.html')
