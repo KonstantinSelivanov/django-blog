@@ -1,19 +1,19 @@
 from typing import Union
-from django.shortcuts import get_object_or_404
-from taggit.models import Tag
-from django import template
-from django.db.models import Count
 
-from .models import Comment, Category, Post
-from .forms import CommentForm
 from django.contrib import messages
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.db.models import Count
+from django.shortcuts import get_object_or_404
+from taggit.models import Tag
+
+from .forms import CommentForm
+from .models import Category, Comment, Post
 
 
 def filter_post_by_tag(tag_slug: str, post: list) -> Union[list, str]:
     """
     Filter blog posts by tag.
-    Фильтрация постов блога по тегу.
+    Фильтровать посты блога по тегу.
     """
     tag = None
     if tag_slug:
@@ -22,12 +22,11 @@ def filter_post_by_tag(tag_slug: str, post: list) -> Union[list, str]:
     return post, tag
 
 
-
 def filter_post_by_category(category_slug: str,
                             post: list) -> Union[list, str]:
     """
     Filter blog posts by category.
-    Фильтрация постов блога по категории.
+    Фильтровать посты блога по категории.
     """
     category = None
     if category_slug:
@@ -57,7 +56,7 @@ def paginate_posts_page(post: list,
 def get_similar_posts(post: list, count_post: int) -> list:
     """
     Get a list of related articles by tags.
-    Получение списка похожих статей по тегам.
+    Получить список похожих статей по тегам.
     """
     # Formation of a list of related posts by tags
     # Getting all the current post ID tags. Getting a flat list - flat=True
@@ -86,8 +85,8 @@ def get_similar_posts(post: list, count_post: int) -> list:
 def add_new_comment_to_post(request,
                             post: list) -> Union[Comment, CommentForm]:
     """
-    Add new comment to post
-    Добавление нового комментария к посту
+    Add a new comment to the post.
+    Добавить новый комментарий к посту.
     """
     new_comment = None
     if request.method == 'POST':

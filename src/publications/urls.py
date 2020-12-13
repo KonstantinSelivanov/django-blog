@@ -1,10 +1,7 @@
 from django.urls import path
 
 from . import views
-from django.conf.urls import url
-# from . import templatetags
-# from publications.templatetags import tags_services
-# from publications.templatetags import tags_services
+
 app_name = 'publications'
 
 urlpatterns = [

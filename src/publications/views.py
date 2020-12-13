@@ -1,18 +1,15 @@
-
 from django.shortcuts import get_object_or_404, render
 
-from .models import Post, Comment, Category
-from .forms import CommentForm
-from .services import (filter_post_by_tag, filter_post_by_category,
-                       add_new_comment_to_post, paginate_posts_page,
-                       get_similar_posts)
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from .models import Post
+from .services import (add_new_comment_to_post, filter_post_by_category,
+                       filter_post_by_tag, get_similar_posts,
+                       paginate_posts_page)
 
 
 def post_list(request, tag_slug=None, category_slug=None):
     """
-    A web service displaying all published posts.
-    Веб-сервис, отображающих все опубликованные посты.
+    Show all posts published.
+    Отобразить все опубликованные посты.
     """
     post = Post.published.all()
     post, tag = filter_post_by_tag(tag_slug, post)
@@ -27,8 +24,8 @@ def post_list(request, tag_slug=None, category_slug=None):
 
 def post_detail(request, year, month, day, slug):
     """
-    A web service that displays the post.
-    Веб-сервис, отображающий пост.
+    Show details of published post.
+    Отобразить детали опубликованного поста.
     """
     post = get_object_or_404(Post, slug=slug, status='published',
                              date_published__year=year,

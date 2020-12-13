@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
-from pathlib import Path
+# from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 PROJECT_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     # Applications
     'publications.apps.PublicationsConfig',
 ]
-
 
 
 MIDDLEWARE = [

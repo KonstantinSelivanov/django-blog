@@ -1,9 +1,7 @@
 from django import template
-
-from ..models import Post, Category
-from django.shortcuts import get_object_or_404
 from django.db.models import Count
 
+from ..models import Category, Post
 
 # A module-level variable named register, which is an instance
 # of template.Library in which all tags and filters are registered.
@@ -44,17 +42,6 @@ def get_most_commented_posts(count=5):
     return Post.published.annotate(
         total_comments=Count('publications_comments')).\
         order_by('-total_comments')[:count]
-
-
-# @register.inclusion_tag('publications/posts_archives.html')
-# def show_posts_archives(count: int):
-#     """
-#     Displays archived blog posts.
-#     Отображает архива постов блога.
-#     """
-#     posts_archives = Post.published.order_by('-date_published')[:count]
-
-#     return {'posts_archives': posts_archives}
 
 
 @register.inclusion_tag('publications/category.html')

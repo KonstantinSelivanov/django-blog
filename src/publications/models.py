@@ -1,30 +1,21 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.utils import timezone
-
-from django.utils.text import slugify
-from django.template.defaultfilters import slugify
-
 from taggit.managers import TaggableManager
-from taggit.models import TagBase
-
 from unidecode import unidecode
 
 
 class PublishedManager(models.Manager):
     """
-    Own model manager.
-    Only published posts will be displayed.
-    Собственный менеджер модели.
-    Будут отображаться только опубликованные посты.
+    Custom model manager displaying only published posts.
+    Собственный менеджер модели отображающий только опубликованные посты.
     """
     def get_queryset(self):
         """
-        Returns a QuerySet filtered by status = 'published'. A QuerySet with
-        posted posts will be returned.
-        Возвращает QuerySet с фильтром по status='published'. Будет возвращен
-        QuerySet с опубликованными постами.
+        Return a QuerySet with a posted post filter.
+        Возвратить QuerySet с фильтром опубликованных постов.
         """
         return super(PublishedManager, self) \
             .get_queryset() \
@@ -51,8 +42,6 @@ class Category(models.Model):
 
     def __str__(self):
         return self.category
-
-
 
     def save(self, *args, **kwargs):
         """
@@ -87,7 +76,6 @@ class Post(models.Model):
         ('draft', 'черновик'),
         ('published', 'опубликовано')
     )
-
     title = models.CharField(verbose_name='Заголовок поста', max_length=250)
     slug = models.SlugField(max_length=250,
                             blank=True,
