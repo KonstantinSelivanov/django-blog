@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SITE_ID = 1
+
 
 # Application definition
 
@@ -111,6 +113,13 @@ DATABASES = {
     }
 }
 
+# Email settings
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_HOST_USER = 'mymail@mail.ru'
+EMAIL_HOST_PASSWORD = 'mypassword'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = 'mymail@mail.ru'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

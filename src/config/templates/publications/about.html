@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+            <h2>{{ about.title }}</h2>
+            <div class="about-section">
+                <div class="about-grid">
+                    <p>{{ about.body|safe }}</p>
+                </div>
+            </div>
+{% endblock content %}

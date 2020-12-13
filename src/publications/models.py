@@ -173,3 +173,26 @@ class Comment(models.Model):
         Метод возвращает отображение объекта понятном виде.
         """
         return 'Коментарий от {} на {}'.format(self.author, self.post)
+
+
+class About(models.Model):
+    """
+    Model about blog.
+    Модель страница о блоге.
+    """
+    title = models.CharField(verbose_name='Заголовок страницы', max_length=250)
+    body = models.TextField(verbose_name='Содержание страницы')
+    created = models.DateTimeField(verbose_name='Дата написания',
+                                   auto_now_add=True)
+    updated = models.DateTimeField(verbose_name='Дата обновления',
+                                   auto_now=True)
+
+    class Meta:
+        verbose_name = 'Cтраницу о блоге'
+        verbose_name_plural = 'Cтраница о блоге'
+        db_table = 'about'
+
+    def __str__(self):
+        return self.title
+
+
