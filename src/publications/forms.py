@@ -21,8 +21,13 @@ class FeedbackForm(forms.Form):
     Feedback form.
     Форма обратной связи.
     """
-    subject = forms.CharField(verbose_name='Имя', max_length=80)
-    subject = forms.CharField(verbose_name='Тема', max_length=100)
-    email = forms.EmailField(verbose_name='e-mail')
-    message = forms.CharField(verbose_name='Сообщение', max_length=500)
-    copy = forms.BooleanField(required=False)
+    subject = forms.CharField(label='Тема',
+                              max_length=100,
+                              widget=forms.TextInput())
+    email = forms.EmailField(label='E-mail',
+                             max_length=100,
+                             widget=forms.TextInput())
+    message = forms.CharField(label='Сообщение',
+                              widget=forms.Textarea())
+
+    captcha = CaptchaField(label='Вы точно человек?')

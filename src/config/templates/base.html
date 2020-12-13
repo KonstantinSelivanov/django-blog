@@ -67,8 +67,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <span class="menu"> </span>
                 <ul>
                     <li class="active"><a href="/">ГЛАВНАЯ</a></li>
-                    <li><a href="{% url "publications:page_about_blog" %}">ОБО МНЕ</a></li>
-                    <li><a href="contact.html">КОНТАКТЫ</a></li>
+                    <li><a href="{% url "publications:display_page_about_blog" %}">ОБО МНЕ</a></li>
+                    <li><a href="{% url "publications:send_feedback" %}">КОНТАКТЫ</a></li>
                     <div class="clearfix"> </div>
                 </ul>
             </div>
@@ -86,6 +86,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <div class="container">
             <div class="content-grids">
                 <div class="col-md-8 content-main">
+                    {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li class="{{ message.tags }}">
+                                    {{ message|safe }}
+                                    <a href="" class="close">x</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}                
                     <div class="content-grid">
                         {% block content %} {% endblock content %}
                     </div>

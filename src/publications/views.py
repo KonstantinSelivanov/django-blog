@@ -1,12 +1,14 @@
 from django.shortcuts import get_object_or_404, render
 from django.conf import settings
-from django.core.mail import send_mail
+from django.core.mail import BadHeaderError, send_mail
+from django.contrib import messages
 
 from .models import Post, About
 from .forms import FeedbackForm
 from .services import (add_new_comment_to_post, filter_post_by_category,
                        filter_post_by_tag, get_similar_posts,
                        paginate_posts_page)
+from django.http import HttpResponse
 
 
 def post_list(request, tag_slug=None, category_slug=None):
@@ -46,7 +48,7 @@ def post_detail(request, year, month, day, slug):
                             'similar_posts': similar_posts})
 
 
-def page_about_blog(request):
+def display_page_about_blog(request):
     """
     Display the blog information page.
     Отобразить страницу с информацией о блоге.
@@ -56,29 +58,31 @@ def page_about_blog(request):
     return render(request, 'publications/about.html', {'about': about})
 
 
-def page_feedback(request):
+def send_feedback(request):
     """
-    
+    Send feedback.
+    Оставить сообщение.
     """
     if request.method == 'POST':
         feedback_form = FeedbackForm(request.POST)
         if feedback_form.is_valid():
-            subject = feedback_form.changed_data['subject']
-            subject = feedback_form.changed_data['subject']
-            email = feedback_form.changed_data['email']
-            message = feedback_form.changed_data['message']
-            copy = feedback_form.cleaned_data['copy']
+            subject = feedback_form.cleaned_data['subject']
+            email = feedback_form.cleaned_data['email']
+            message = feedback_form.cleaned_data['message']
 
-            recipient_list = settings.EMAIL_HOST_USER
+            recipient_list = [settings.EMAIL_HOST_USER]
+            recipient_list.append(email)
 
-            if copy:
-                recipient_list.append(email)
             try:
-                send_mail(subject, message, settings.EMAIL_HOST_USER, recipient_list)
+                send_mail(subject, message, settings.EMAIL_HOST_USER,
+                          recipient_list)
             except BadHeaderError:
                 return HttpResponse('Обнаружен недопустимый заголовок')
-            return HttpResponseRedirect('')
+            return messages.success(request, 'Profile updated successfully')
+            
         else:
             pass
     else:
-        pass
+        feedback_form = FeedbackForm()
+    return render(request, 'publications/contact.html',
+                           {'feedback_form': feedback_form})

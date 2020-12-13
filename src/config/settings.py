@@ -112,14 +112,17 @@ DATABASES = {
         }
     }
 }
-
+# Configuring messages to be sent to the console instead of using
+# an SMTP server
+# Настройка отправки сообщений в консоль вместо использования SMTP-сервера
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # Email settings
-EMAIL_HOST = 'smtp.mail.ru'
-EMAIL_HOST_USER = 'mymail@mail.ru'
-EMAIL_HOST_PASSWORD = 'mypassword'
-EMAIL_PORT = 465
-EMAIL_USE_SSL = True
-DEFAULT_FROM_EMAIL = 'mymail@mail.ru'
+# EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_HOST_USER = 'admin@localhost.ru'
+# EMAIL_HOST_PASSWORD = 'mypassword'
+# EMAIL_PORT = 465
+# EMAIL_USE_SSL = True
+# DEFAULT_FROM_EMAIL = 'mymail@mail.ru'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

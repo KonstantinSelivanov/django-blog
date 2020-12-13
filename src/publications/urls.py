@@ -11,5 +11,7 @@ urlpatterns = [
     path('tag/<slug:tag_slug>/', views.post_list, name='post_list_by_tag'),
     path('category/<slug:category_slug>/',
          views.post_list, name='post_list_by_category'),
-    path('about/', views.page_about_blog, name='page_about_blog'),
+    path('about/',
+         views.display_page_about_blog, name='display_page_about_blog'),
+    path('contact/', views.send_feedback, name='send_feedback'),
 ]
