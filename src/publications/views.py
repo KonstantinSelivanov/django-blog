@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, render
+from django.db.models import Q
 
 from .models import Post, About, Contact
 from .services import (add_new_comment_to_post, filter_post_by_category,
@@ -55,10 +56,10 @@ def display_page_about_blog(request):
 
 def display_page_contact(request):
     """
-    Display a page displaying contacts and allowing a site visitor
-    to leave a message to the site author.
-    Отобразить страницу отображающую контакты и позволяющие посетителю сайта
-    оставить сообщение автору сайта.
+    Display a page with contacts, as well as a feedback form with
+    a blog author.
+    Отобразить страницу с контактами, а также форму обратной связи
+    с автором блога.
     """
     contact = get_object_or_404(Contact)
     feedback_form = send_feedback(request)
@@ -66,3 +67,17 @@ def display_page_contact(request):
     return render(request, 'publications/contact.html',
                            {'contact': contact,
                             'feedback_form': feedback_form})
+
+
+def search(request):
+    """
+    Search blog posts.
+    Поиск постов блога.
+    """
+    search_query = request.GET.get('search', '')
+    object_list = Post.published.filter(
+        Q(title__icontains=search_query) | Q(body__icontains=search_query))
+    page, posts = paginate_posts_page(object_list, 3, request)
+
+    return render(request, 'publications/list.html',
+                           {'page': page, 'posts': posts})

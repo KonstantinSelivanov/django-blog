@@ -1,17 +1,16 @@
 from typing import Union
 
+from config import settings
 from django.contrib import messages
+from django.core.mail import BadHeaderError, send_mail
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Count
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from taggit.models import Tag
 
-from .forms import CommentForm
+from .forms import CommentForm, FeedbackForm
 from .models import Category, Comment, Post
-from publications.forms import FeedbackForm
-from config import settings
-from django.core.mail import BadHeaderError, send_mail
-from django.http import HttpResponse
 
 
 def filter_post_by_tag(tag_slug: str, post: list) -> Union[list, str]:
