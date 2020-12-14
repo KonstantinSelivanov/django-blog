@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Post, Category, Comment, About
+from .models import Post, Category, Comment, About, Contact
 
 
 @admin.register(Post)
@@ -27,4 +27,9 @@ class CommentAdmin(admin.ModelAdmin):
 
 @admin.register(About)
 class AboutAdmin(admin.ModelAdmin):
+    list_display = ('title', 'created', 'updated')
+
+
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
     list_display = ('title', 'created', 'updated')

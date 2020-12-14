@@ -24,7 +24,7 @@
                 {% else %}
                     <h2>Добавить новый комментарий</h2><br>
                     <div class="content-form">
-                    <form action="." method="post">
+                    <form action="." method="POST">
                         {% csrf_token %}
                         {% for field in comment_form.visible_fields %}
                                 {{ field.label_tag }}

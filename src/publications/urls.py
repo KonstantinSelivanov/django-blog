@@ -13,5 +13,5 @@ urlpatterns = [
          views.post_list, name='post_list_by_category'),
     path('about/',
          views.display_page_about_blog, name='display_page_about_blog'),
-    path('contact/', views.send_feedback, name='send_feedback'),
+    path('contact/', views.display_page_contact, name='display_page_contact'),
 ]

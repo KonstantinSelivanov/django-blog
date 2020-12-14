@@ -1,14 +1,9 @@
 from django.shortcuts import get_object_or_404, render
-from django.conf import settings
-from django.core.mail import BadHeaderError, send_mail
-from django.contrib import messages
 
-from .models import Post, About
-from .forms import FeedbackForm
+from .models import Post, About, Contact
 from .services import (add_new_comment_to_post, filter_post_by_category,
                        filter_post_by_tag, get_similar_posts,
-                       paginate_posts_page)
-from django.http import HttpResponse
+                       paginate_posts_page, send_feedback)
 
 
 def post_list(request, tag_slug=None, category_slug=None):
@@ -58,31 +53,16 @@ def display_page_about_blog(request):
     return render(request, 'publications/about.html', {'about': about})
 
 
-def send_feedback(request):
+def display_page_contact(request):
     """
-    Send feedback.
-    Оставить сообщение.
+    Display a page displaying contacts and allowing a site visitor
+    to leave a message to the site author.
+    Отобразить страницу отображающую контакты и позволяющие посетителю сайта
+    оставить сообщение автору сайта.
     """
-    if request.method == 'POST':
-        feedback_form = FeedbackForm(request.POST)
-        if feedback_form.is_valid():
-            subject = feedback_form.cleaned_data['subject']
-            email = feedback_form.cleaned_data['email']
-            message = feedback_form.cleaned_data['message']
+    contact = get_object_or_404(Contact)
+    feedback_form = send_feedback(request)
 
-            recipient_list = [settings.EMAIL_HOST_USER]
-            recipient_list.append(email)
-
-            try:
-                send_mail(subject, message, settings.EMAIL_HOST_USER,
-                          recipient_list)
-            except BadHeaderError:
-                return HttpResponse('Обнаружен недопустимый заголовок')
-            return messages.success(request, 'Profile updated successfully')
-            
-        else:
-            pass
-    else:
-        feedback_form = FeedbackForm()
     return render(request, 'publications/contact.html',
-                           {'feedback_form': feedback_form})
+                           {'contact': contact,
+                            'feedback_form': feedback_form})
