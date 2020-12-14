@@ -15,4 +15,6 @@ urlpatterns = [
          views.display_page_about_blog, name='display_page_about_blog'),
     path('contact/', views.display_page_contact, name='display_page_contact'),
     path('search/', views.search, name='search'),
+    path('subscribe/', views.subscribe_to_newsletter,
+                       name='subscribe_to_newsletter'),
 ]

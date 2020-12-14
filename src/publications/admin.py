@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Post, Category, Comment, About, Contact
+from .models import Post, Category, Comment, About, Contact, Subscriber
 
 
 @admin.register(Post)
@@ -33,3 +33,7 @@ class AboutAdmin(admin.ModelAdmin):
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
     list_display = ('title', 'created', 'updated')
+
+@admin.register(Subscriber)
+class SubscriberAdmin(admin.ModelAdmin):
+    list_display = ('email', 'verification_code', 'confirmed')

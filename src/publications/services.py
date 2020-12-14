@@ -11,6 +11,7 @@ from taggit.models import Tag
 
 from .forms import CommentForm, FeedbackForm
 from .models import Category, Comment, Post
+from random import random
 
 
 def filter_post_by_tag(tag_slug: str, post: list) -> Union[list, str]:
@@ -135,3 +136,11 @@ def send_feedback(request) -> FeedbackForm:
         feedback_form = FeedbackForm()
 
     return feedback_form
+
+
+def random_number_generation():
+    """
+    Generate random numbers for news subscription verification code.
+    Генерировать случайные числа для проверочного кода новостной подписки.
+    """
+    return "%0.12d" % random.randint(0, 999999999999)
