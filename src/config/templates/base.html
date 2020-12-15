@@ -57,6 +57,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <a href="/"><img src="{% static 'images/logo.jpg' %}" title="" /></a>
             </div>
             <!---start-top-nav---->
+
             <div class="top-menu">
                 <div class="search">
                     <form action="{% url 'publications:search' %}" method='GET'>
@@ -64,6 +65,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         <input type="submit" value="" />
                     </form>
                 </div>
+
                 <span class="menu"> </span>
                 <ul>
                     <li class="active"><a href="/">ГЛАВНАЯ</a></li>
@@ -98,7 +100,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             {% show_latest_posts 3 %}
                         </ul>
                     </div>
-                    <div class="comments">
+                    <div class="clearfix"></div>
+                    <div class="recent">
                         <h3>САМЫЕ КОМЕНТИРУЕМЫЕ ПОСТЫ</h3>
                         {% get_most_commented_posts as most_commanted_posts %}
                         <ul>
@@ -130,8 +133,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         </div>
     </div>
     <!---->
+    
     <div class="footer">
         <div class="container">
+
             <p>Copyrights © 2015 Blog All rights reserved | Template by <a href="http://w3layouts.com/">W3layouts</a></p>
         </div>
     </div>

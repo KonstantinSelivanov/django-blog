@@ -85,7 +85,7 @@ TEMPLATES = [
 
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, 'static')]
+# STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, 'static')]
 # For prod
 # STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 STATIC_ROOT = 'config/static'
@@ -123,6 +123,7 @@ EMAIL_HOST_USER = 'admin@localhost.ru'
 # EMAIL_PORT = 465
 # EMAIL_USE_SSL = True
 # DEFAULT_FROM_EMAIL = 'mymail@mail.ru'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

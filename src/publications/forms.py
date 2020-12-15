@@ -31,13 +31,3 @@ class FeedbackForm(forms.Form):
                               widget=forms.Textarea())
 
     captcha = CaptchaField(label='Вы точно человек?')
-
-
-class SubscribeForm(forms.Form):
-    """
-    Subscription form.
-    Форма новостной подписки.
-    """
-    email = forms.EmailField(label='e-mail',
-                             max_length=100,
-                             widget=forms.EmailInput())

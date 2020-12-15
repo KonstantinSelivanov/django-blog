@@ -215,18 +215,3 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.title
-
-
-class Subscriber(models.Model):
-    """
-    Subscription model.
-    Модель новостной подписки.
-    """
-    email = models.EmailField(verbose_name='e-mail', unique=True)
-    verification_code = models.CharField(verbose_name='Проверочный код',
-                                         max_length=20)
-    confirmed = models.BooleanField(verbose_name='Подтверждение подписки',
-                                    default=False)
-
-    def __str__(self):
-        return self.email + " (" + ("не " if not self.confirmed else "") + "подтверждаю подписку)"

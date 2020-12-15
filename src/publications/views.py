@@ -1,6 +1,5 @@
 from django.shortcuts import get_object_or_404, render
 from django.db.models import Q
-from django.views.decorators.csrf import csrf_exempt
 
 from .models import Post, About, Contact
 from .services import (add_new_comment_to_post, filter_post_by_category,
@@ -82,11 +81,3 @@ def search(request):
 
     return render(request, 'publications/list.html',
                            {'page': page, 'posts': posts})
-
-
-@csrf_exempt
-def subscribe_to_newsletter(request):
-    """
-    
-    """
-    
