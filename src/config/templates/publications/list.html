@@ -14,7 +14,7 @@
                                     <a href="{% url "publications:post_list_by_tag" tag.slug %}">{{ tag.name }}</a>
                                     {% if not forloop.last %}, {% endif %}
                                 {% endfor %}
-                                <p>{{ post.body|truncatewords:50|safe }}</p>
+                                <p>{{ post.body|truncatewords:70|safe }}</p>
                                 <a href="{{ post.get_absolute_url }}"><span></span>Читать дальше</a>
                             </div>
                         </div>

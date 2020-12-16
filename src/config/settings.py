@@ -28,8 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-SITE_ID = 1
-
+SITE_ID = 3
+SITE_NAME = 'Мой блог'
 
 # Application definition
 
@@ -40,7 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #
+    # Site map
+    # Карта сайта
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
+
     'widget_tweaks',
     'unidecode',
     'captcha',
@@ -85,7 +89,7 @@ TEMPLATES = [
 
 
 STATIC_URL = '/static/'
-# STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, 'static')]
+STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, 'static')]
 # For prod
 # STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 STATIC_ROOT = 'config/static'
