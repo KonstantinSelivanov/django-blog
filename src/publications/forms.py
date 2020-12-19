@@ -1,5 +1,6 @@
 from django import forms
 from captcha.fields import CaptchaField
+from ckeditor.widgets import CKEditorWidget
 
 from .models import Comment
 
@@ -9,11 +10,13 @@ class CommentForm(forms.ModelForm):
     Comment form
     Форма комментариев
     """
+    body = forms.CharField(label='Сообщение',
+                           widget=CKEditorWidget())
     captcha = CaptchaField(label='Вы точно человек?')
 
     class Meta:
         model = Comment
-        fields = ('author', 'email', 'body')
+        fields = ('author', 'email')
 
 
 class FeedbackForm(forms.Form):
@@ -28,6 +31,6 @@ class FeedbackForm(forms.Form):
                              max_length=100,
                              widget=forms.TextInput())
     message = forms.CharField(label='Сообщение',
-                              widget=forms.Textarea())
+                              widget=CKEditorWidget())
 
     captcha = CaptchaField(label='Вы точно человек?')

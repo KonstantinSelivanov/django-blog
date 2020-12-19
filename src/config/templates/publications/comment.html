@@ -28,6 +28,7 @@
                         {% csrf_token %}
                         {% for field in comment_form.visible_fields %}
                                 {{ field.label_tag }}
+                                <p>
                                 {% render_field field class="form-control" %}
                                 {% if field.help_text %}
                                 <small class="form-text text-muted">{{ field.help_text }}</small>

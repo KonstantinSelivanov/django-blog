@@ -45,6 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
 
+    'ckeditor',
+    'ckeditor_uploader', # WYSIWYG editor
+
     'widget_tweaks',
     'unidecode',
     'captcha',
@@ -95,7 +98,7 @@ STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, 'static')]
 STATIC_ROOT = 'config/static'
 
 MEDIA_URL = '/media/'
-
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media/')
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
@@ -172,3 +175,58 @@ CAPTCHA_FONT_SIZE = (28)
 CAPTCHA_BACKGROUND_COLOR = '#cccccc'
 CAPTCHA_FOREGROUND_COLOR = '#001100'
 CAPTCHA_LENGTH = 6
+
+# Settings CKEDITOR
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        # 'skin': 'moono',
+        'skin': 'moono-lisa',
+        'toolbar_YourCustomToolbarConfig': [
+            {'name': 'styles', 'items': ['Format', 'Font', 'FontSize']},
+            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste',
+                                            'PasteFromWord', '-', 'Link',
+                                            'Image', 'Table', 'Blockquote',
+                                            'Smiley']},
+            '/',
+            {'name': 'basicstyles', 'items': ['Bold', 'Italic', 'Underline',
+                                              'Strike', 'Subscript',
+                                              'Superscript']},
+            {'name': 'paragraph', 'items': ['NumberedList', 'BulletedList',
+                                            '-', 'JustifyLeft',
+                                            'JustifyCenter', 'JustifyRight',
+                                            'JustifyBlock']},
+            {'name': 'editing', 'items': ['Find', 'Replace', 'Undo', 'Redo',
+                                          'Maximize', 'Preview']},
+        ],
+        'toolbar': 'YourCustomToolbarConfig',  # put selected toolbar config here
+        # 'toolbarGroups': [{ 'name': 'document', 'groups': [ 'mode', 'document', 'doctools' ] }],
+        # 'height': 291,
+        'width': '115%',
+        # 'filebrowserWindowHeight': 725,
+        # 'filebrowserWindowWidth': 940,
+        # 'toolbarCanCollapse': True,
+        # 'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
+        'tabSpaces': 4,
+        'extraPlugins': ','.join([
+            'uploadimage', # the upload image feature
+            # your extra plugins here
+            # 'div',
+            'autolink',
+            'autoembed',
+            'embedsemantic',
+            'autogrow',
+            # 'devtools',
+            'widget',
+            # 'lineutils',
+            'clipboard',
+            'dialog',
+            'dialogui',
+            'elementspath',
+            'youtube'
+        ]),
+    }
+}

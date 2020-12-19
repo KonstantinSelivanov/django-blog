@@ -5,6 +5,8 @@ from django.urls import reverse
 from django.utils import timezone
 from taggit.managers import TaggableManager
 from unidecode import unidecode
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class PublishedManager(models.Manager):
@@ -88,7 +90,7 @@ class Post(models.Model):
                                  verbose_name='Категория',
                                  on_delete=models.CASCADE,
                                  related_name='publications_category')
-    body = models.TextField(verbose_name='Содержание поста')
+    body = RichTextUploadingField(verbose_name='Содержание поста')
     date_published = models.DateTimeField(verbose_name='Дата публикации поста',
                                           default=timezone.now)
     created = models.DateTimeField(verbose_name='Дата написания поста',
@@ -181,7 +183,7 @@ class About(models.Model):
     Модель страница о блоге.
     """
     title = models.CharField(verbose_name='Заголовок страницы', max_length=250)
-    body = models.TextField(verbose_name='Содержание страницы')
+    body = RichTextUploadingField(verbose_name='Содержание страницы')
     created = models.DateTimeField(verbose_name='Дата написания',
                                    auto_now_add=True)
     updated = models.DateTimeField(verbose_name='Дата обновления',
@@ -202,7 +204,7 @@ class Contact(models.Model):
     Модель страницы контактов.
     """
     title = models.CharField(verbose_name='Заголовок страницы', max_length=250)
-    body = models.TextField(verbose_name='Содержание страницы')
+    body = RichTextUploadingField(verbose_name='Содержание страницы')
     created = models.DateTimeField(verbose_name='Дата написания',
                                    auto_now_add=True)
     updated = models.DateTimeField(verbose_name='Дата обновления',

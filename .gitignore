@@ -130,3 +130,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#Ckeditor
+src/config/static/ckeditor/
+
+#Admin panel
+src/config/static/admin/
