@@ -7,7 +7,7 @@
 
 {% block content %}
                     <div class="single-grid">
-                        <h2> {{ post.title }} </h2>
+                        <h2> {{ post.title }} {{ post.number_of_views }}</h2>
                         <p>{{ post.body|safe }}</p>
                     </div>
                     {% include 'publications/similar_posts.html' %}

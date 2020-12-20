@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render
-from django.db.models import Q
+from django.db.models import Q, F
+from django.contrib.sessions.models import Session
 
 from .models import Post, About, Contact
 from .services import (add_new_comment_to_post, filter_post_by_category,
@@ -13,6 +14,7 @@ def post_list(request, tag_slug=None, category_slug=None):
     Отобразить все опубликованные посты.
     """
     post = Post.published.all()
+    
     post, tag = filter_post_by_tag(tag_slug, post)
     post, category = filter_post_by_category(category_slug, post)
     page, posts = paginate_posts_page(post, 3, request)
@@ -32,10 +34,16 @@ def post_detail(request, year, month, day, slug):
                              date_published__year=year,
                              date_published__month=month,
                              date_published__day=day)
+
     comments = post.publications_comments.filter(moderation=True)
     new_comment, comment_form = add_new_comment_to_post(request, post)
     similar_posts = get_similar_posts(post, 4)
 
+    # print(request.session)
+    # if requests.session.get('has_commented', False):
+    #     Post.published.filter(pk=post.id).update(number_of_views=F('number_of_views'))
+    # Post.published.filter(pk=post.id).update(number_of_views=F('number_of_views') + 1)
+    # request.session['has_commented'] = True
     return render(request, 'publications/detail.html',
                            {'post': post,
                             'comments': comments,

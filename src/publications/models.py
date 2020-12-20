@@ -101,6 +101,7 @@ class Post(models.Model):
                               max_length=10,
                               choices=STATUS_CHOICES,
                               default='draft')
+    number_of_views = models.IntegerField(verbose_name='Количество просмотров', default=0)
     # Model manager
     # Менеджер модели
     published = PublishedManager()
@@ -156,12 +157,13 @@ class Comment(models.Model):
                              related_name='publications_comments')
     author = models.CharField(verbose_name='Имя', max_length=80)
     email = models.EmailField(verbose_name='e-mail')
-    body = models.TextField(verbose_name='Коментарий')
+    body = RichTextField(verbose_name='Коментарий')
     created = models.DateTimeField(verbose_name='Дата создания комментария',
                                    auto_now_add=True)
     updated = models.DateTimeField(verbose_name='Дата изменения комментария',
                                    auto_now=True)
     moderation = models.BooleanField(verbose_name='Модерация', default=True)
+
 
     class Meta:
         ordering = ('created',)

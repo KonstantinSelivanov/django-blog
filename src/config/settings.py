@@ -225,8 +225,7 @@ CKEDITOR_CONFIGS = {
             'clipboard',
             'dialog',
             'dialogui',
-            'elementspath',
-            'youtube'
+            'elementspath'
         ]),
     }
 }
