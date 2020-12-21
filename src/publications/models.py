@@ -101,7 +101,8 @@ class Post(models.Model):
                               max_length=10,
                               choices=STATUS_CHOICES,
                               default='draft')
-    number_of_views = models.IntegerField(verbose_name='Количество просмотров', default=0)
+    hits = models.IntegerField(verbose_name='Количество просмотров', default=0)
+
     # Model manager
     # Менеджер модели
     published = PublishedManager()
@@ -219,3 +220,47 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.title
+
+class Visitor(models.Model):
+    """
+    
+    """
+    created = models.DateTimeField(verbose_name='Дата первого посещения сайта',
+                                   auto_now_add=True,
+                                   db_index=True,
+                                   editable=False)
+    ip = models.CharField(verbose_name='IP',
+                          max_length=40,
+                          db_index=True,
+                          editable=False)
+    session = models.CharField(verbose_name='Сессия',
+                               max_length=40,
+                               db_index=True,
+                               editable=False)
+    user_agent = models.CharField(verbose_name='Браузер',
+                                  max_length=255,
+                                  editable=False)
+    post = models.ForeignKey(Post,
+                             verbose_name='Пост',
+                             on_delete=models.CASCADE,
+                             related_name='visitor_publications')
+
+
+    class Meta:
+        ordering = ('-created',)
+        verbose_name = 'hit'
+        verbose_name_plural = 'hits'
+        db_table = 'visitor'
+
+    # def __str__(self):
+    #     return 'Просмотры: %s' % self.pk
+
+    # def save(self, *args, **kwargs):
+        """
+        The first time the object is created and saved, we increment
+        the associated HitCount object by one. The opposite applies
+        if the Hit is deleted.
+
+        """
+        # if self.pk is None:
+        #     self.hitcount.increase()

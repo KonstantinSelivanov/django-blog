@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.db.models import Q, F
 from django.contrib.sessions.models import Session
 
-from .models import Post, About, Contact
+from .models import Post, About, Contact, Visitor
 from .services import (add_new_comment_to_post, filter_post_by_category,
                        filter_post_by_tag, get_similar_posts,
                        paginate_posts_page, send_feedback)
@@ -24,6 +24,9 @@ def post_list(request, tag_slug=None, category_slug=None):
                                                       'tag': tag,
                                                       'category': category})
 
+import re
+# this is not intended to be an all-knowing IP address regex
+IP_RE = re.compile('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}')
 
 def post_detail(request, year, month, day, slug):
     """
@@ -38,12 +41,43 @@ def post_detail(request, year, month, day, slug):
     comments = post.publications_comments.filter(moderation=True)
     new_comment, comment_form = add_new_comment_to_post(request, post)
     similar_posts = get_similar_posts(post, 4)
+    
+    ip_address = request.META.get('HTTP_X_FORWARDED_FOR',
+                                  request.META.get('REMOTE_ADDR', '127.10.0.1'))
+    if ip_address:
+        # make sure that only one IP
+        # убедиться что только один IP
+        try:
+            ip_address = IP_RE.match(ip_address)
+            if ip_address:
+                ip_address = ip_address.group(0)
+            else:
+                # нет IP, вероятно, от какого-то прокси или другого устройства
+                # на каком-то поддельном IP
+                # no IP, probably from some proxy or other device
+                # in some bogus IP
+                ip_address = '10.0.0.1'
+        except IndexError:
+            pass
 
-    # print(request.session)
-    # if requests.session.get('has_commented', False):
-    #     Post.published.filter(pk=post.id).update(number_of_views=F('number_of_views'))
-    # Post.published.filter(pk=post.id).update(number_of_views=F('number_of_views') + 1)
-    # request.session['has_commented'] = True
+    user_agent = request.META.get('HTTP_USER_AGENT', '')[:255]
+
+    if not request.session.session_key:
+        request.session.create()
+    session_key = request.session.session_key
+
+    obj1 = Visitor.objects.filter(Q(session=session_key) & Q(post_id=post.id))
+
+    if obj1.exists():
+        pass
+    else:
+        Post.published.filter(pk=post.id).update(hits=F('hits') + 1)
+
+    Visitor(session=session_key,
+            ip=ip_address,
+            user_agent=user_agent,
+            post_id=post.id).save()
+
     return render(request, 'publications/detail.html',
                            {'post': post,
                             'comments': comments,
