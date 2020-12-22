@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-                        {% for post in posts %}
+                        {% for post in object_list %}
                         <div class="content-grid-info">
                             <div class="post-info">
                                 <h4><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h4>
@@ -14,11 +14,11 @@
                                     <a href="{% url "publications:post_list_by_tag" tag.slug %}">{{ tag.name }}</a>
                                     {% if not forloop.last %}, {% endif %}
                                 {% endfor %}
-                                <p>Количество просмотров: {{ post.number_of_views }}
+                                <p>Количество просмотров: {{ post.hits }}
                                 <p>{{ post.body|truncatewords:70|safe }}</p>
                                 <a href="{{ post.get_absolute_url }}"><span></span>Читать дальше</a>
                             </div>
                         </div>
                         {% endfor %}
-                        {% include 'publications/pagination.html' with page=posts %}
+                        {% include 'publications/pagination.html' with page=object_list %}
 {% endblock content %}

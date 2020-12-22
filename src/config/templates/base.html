@@ -106,23 +106,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     </div>
                     <div class="clearfix"></div>
                     <div class="recent">
-                        <h3>САМЫЕ КОМЕНТИРУЕМЫЕ ПОСТЫ</h3>
-                        {% get_most_commented_posts as most_commanted_posts %}
-                        <ul>
-                            {% for post in most_commanted_posts %}
-                            <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-                            {% endfor %}
-                        </ul>
+                        <h3>САМЫЕ КОММЕНТИРУЕМЫЕ ПОСТЫ</h3>
+                        {% include 'publications/most_commented_posts.html' %}
                     </div>
                     <div class="clearfix"></div>
                     <div class="archives">
                         <h3>АРХИВЫ</h3>
-                        <ul>
-                            <li><a href="#">October 2013</a></li>
-                            <li><a href="#">September 2013</a></li>
-                            <li><a href="#">August 2013</a></li>
-                            <li><a href="#">July 2013</a></li>
-                        </ul>
+                        {% include 'publications/archives.html' %}
                     </div>
                     <div class="categories">
                         <h3>КАТЕГОРИИ</h3>
@@ -137,10 +127,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         </div>
     </div>
     <!---->
-    
     <div class="footer">
         <div class="container">
-
             <p>Copyrights © 2015 Blog All rights reserved | Template by <a href="http://w3layouts.com/">W3layouts</a></p>
         </div>
     </div>

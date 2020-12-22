@@ -1,16 +1,17 @@
+import re
 from typing import Union
 
 from config import settings
 from django.contrib import messages
 from django.core.mail import BadHeaderError, send_mail
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.db.models import Count
+from django.db.models import Count, F, Q
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from taggit.models import Tag
 
 from .forms import CommentForm, FeedbackForm
-from .models import Category, Comment, Post
+from .models import Category, Comment, Post, Visitor
 
 
 def filter_post_by_tag(tag_slug: str, post: list) -> Union[list, str]:
@@ -48,12 +49,12 @@ def paginate_posts_page(post: list,
     paginator = Paginator(post, number_of_post)
     page = request.GET.get('page')
     try:
-        posts = paginator.page(page)
+        object_list = paginator.page(page)
     except PageNotAnInteger:
-        posts = paginator.page(1)
+        object_list = paginator.page(1)
     except EmptyPage:
-        posts = paginator.page(paginator.num_pages)
-    return page, posts
+        object_list = paginator.page(paginator.num_pages)
+    return page, object_list
 
 
 def get_similar_posts(post: list, count_post: int) -> list:
@@ -106,6 +107,18 @@ def add_new_comment_to_post(request,
     return new_comment, comment_form
 
 
+def search(request):
+    """
+    Search blog posts.
+    Поиск постов блога.
+    """
+    search_query = request.GET.get('search', '')
+    object_list = Post.published.filter(
+        Q(title__icontains=search_query) | Q(body__icontains=search_query))
+    page, object_list = paginate_posts_page(object_list, 3, request)
+    return page, object_list
+
+
 def send_feedback(request) -> FeedbackForm:
     """
     Send feedback.
@@ -137,3 +150,74 @@ def send_feedback(request) -> FeedbackForm:
     return feedback_form
 
 
+def get_ip_address(request) -> str:
+    """
+    Get the visitor's IP address.
+    Получить IP адрес посетителя.
+    """
+    # A regular expression pattern for an IP address.
+    # Шаблон регулярного выражения для IP адреса.
+    # flake8: noqa W605
+    IP_RE = re.compile('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}')
+
+    ip_address = request.META.get(
+        'HTTP_X_FORWARDED_FOR', request.META.get('REMOTE_ADDR', '127.10.0.1'))
+    if ip_address:
+        # make sure that only one IP
+        # убедиться что только один IP
+        try:
+            ip_address = IP_RE.match(ip_address)
+            if ip_address:
+                ip_address = ip_address.group(0)
+            else:
+                # нет IP, вероятно, от какого-то прокси или другого устройства
+                # на каком-то поддельном IP
+                # no IP, probably from some proxy or other device
+                # in some bogus IP
+                ip_address = '10.0.0.1'
+        except IndexError:
+            pass
+    return ip_address
+
+
+def get_user_agent(request) -> str:
+    """
+    Get information about the visitor's browser.
+    Получить информацию о браузере посетителя.
+    """
+    user_agent = request.META.get('HTTP_USER_AGENT', '')[:255]
+    return user_agent
+
+
+def get_session_key(request) -> str:
+    """
+    Get a visitor session.
+    Получить сессию посетителя.
+    """
+    if not request.session.session_key:
+        request.session.create()
+    session_key = request.session.session_key
+    return session_key
+
+
+def count_number_of_views_post(request, post) -> None:
+    """
+    Counting the number of views of posts.
+    Подсчет количества просмотров постов.
+    """
+    ip_address = get_ip_address(request)
+    user_agent = get_user_agent(request)
+    session_key = get_session_key(request)
+
+    queryset_visitor = Visitor.objects.filter(
+        Q(session=session_key) & Q(post_id=post.id))
+
+    if queryset_visitor.exists():
+        pass
+    else:
+        Post.published.filter(pk=post.id).update(hits=F('hits') + 1)
+
+    Visitor(session=session_key,
+            ip=ip_address,
+            user_agent=user_agent,
+            post_id=post.id).save()

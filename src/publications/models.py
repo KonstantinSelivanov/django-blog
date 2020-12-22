@@ -1,3 +1,5 @@
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import User
 from django.db import models
 from django.template.defaultfilters import slugify
@@ -5,8 +7,6 @@ from django.urls import reverse
 from django.utils import timezone
 from taggit.managers import TaggableManager
 from unidecode import unidecode
-from ckeditor.fields import RichTextField
-from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class PublishedManager(models.Manager):
@@ -165,7 +165,6 @@ class Comment(models.Model):
                                    auto_now=True)
     moderation = models.BooleanField(verbose_name='Модерация', default=True)
 
-
     class Meta:
         ordering = ('created',)
         verbose_name = 'Коментарий'
@@ -221,9 +220,11 @@ class Contact(models.Model):
     def __str__(self):
         return self.title
 
+
 class Visitor(models.Model):
     """
-    
+    Visitor model.
+    Модель посетителей.
     """
     created = models.DateTimeField(verbose_name='Дата первого посещения сайта',
                                    auto_now_add=True,
@@ -245,22 +246,8 @@ class Visitor(models.Model):
                              on_delete=models.CASCADE,
                              related_name='visitor_publications')
 
-
     class Meta:
         ordering = ('-created',)
-        verbose_name = 'hit'
-        verbose_name_plural = 'hits'
+        verbose_name = 'посетителя'
+        verbose_name_plural = 'Посетители'
         db_table = 'visitor'
-
-    # def __str__(self):
-    #     return 'Просмотры: %s' % self.pk
-
-    # def save(self, *args, **kwargs):
-        """
-        The first time the object is created and saved, we increment
-        the associated HitCount object by one. The opposite applies
-        if the Hit is deleted.
-
-        """
-        # if self.pk is None:
-        #     self.hitcount.increase()

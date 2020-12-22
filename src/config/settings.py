@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
 
     'ckeditor',
-    'ckeditor_uploader', # WYSIWYG editor
+    'ckeditor_uploader',  # WYSIWYG editor
 
     'widget_tweaks',
     'unidecode',
@@ -82,6 +82,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'publications.context_processors.posts',
             ],
         },
     },
@@ -92,7 +93,7 @@ TEMPLATES = [
 
 
 STATIC_URL = '/static/'
-# STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, 'static')]
+STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, 'static')]
 # For prod
 # STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 STATIC_ROOT = 'config/static'
@@ -134,7 +135,7 @@ EMAIL_HOST_USER = 'admin@localhost.ru'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
-
+# flake8: noqa E501
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -202,17 +203,11 @@ CKEDITOR_CONFIGS = {
             {'name': 'editing', 'items': ['Find', 'Replace', 'Undo', 'Redo',
                                           'Maximize', 'Preview']},
         ],
-        'toolbar': 'YourCustomToolbarConfig',  # put selected toolbar config here
-        # 'toolbarGroups': [{ 'name': 'document', 'groups': [ 'mode', 'document', 'doctools' ] }],
-        # 'height': 291,
+        'toolbar': 'YourCustomToolbarConfig',
         'width': '115%',
-        # 'filebrowserWindowHeight': 725,
-        # 'filebrowserWindowWidth': 940,
-        # 'toolbarCanCollapse': True,
-        # 'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
         'tabSpaces': 4,
         'extraPlugins': ','.join([
-            'uploadimage', # the upload image feature
+            'uploadimage',  # the upload image feature
             # your extra plugins here
             # 'div',
             'autolink',

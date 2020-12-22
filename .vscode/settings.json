@@ -8,7 +8,7 @@
     "python.linting.flake8Enabled": true,
     "AllAutocomplete.showCurrentDocument": true,
     "python.linting.pylintArgs": ["--load-plugins", "pylint_django"],
-    "python.linting.pycodestyleArgs": ["--ignore=E303,E501"],
+    "python.linting.pycodestyleArgs": ["--ignore=E303,E501,W605"],
     // "python.linting.pydocstyleArgs": ["--ignore=D100,D202,D203,D204,D205,D212,D213,E501"],
     "editor.renderWhitespace": "all",
     "editor.rulers": [79],
