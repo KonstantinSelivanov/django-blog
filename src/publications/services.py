@@ -1,16 +1,16 @@
 import re
 from typing import Union
 
-from config import settings
+
 from django.contrib import messages
-from django.core.mail import BadHeaderError, send_mail
+
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Count, F, Q
-from django.http import HttpResponse
+
 from django.shortcuts import get_object_or_404
 from taggit.models import Tag
 
-from .forms import CommentForm, FeedbackForm
+from .forms import CommentForm
 from .models import Category, Comment, Post, Visitor
 
 
@@ -117,37 +117,6 @@ def search(request):
         Q(title__icontains=search_query) | Q(body__icontains=search_query))
     page, object_list = paginate_posts_page(object_list, 3, request)
     return page, object_list
-
-
-def send_feedback(request) -> FeedbackForm:
-    """
-    Send feedback.
-    Оставить сообщение.
-    """
-    if request.method == 'POST':
-        feedback_form = FeedbackForm(request.POST)
-        if feedback_form.is_valid():
-            subject = feedback_form.cleaned_data['subject']
-            email = feedback_form.cleaned_data['email']
-            message = feedback_form.cleaned_data['message']
-
-            recipient_list = [settings.EMAIL_HOST_USER]
-            recipient_list.append(email)
-
-            try:
-                send_mail(subject, message, [settings.EMAIL_HOST_USER],
-                          recipient_list)
-            except BadHeaderError:
-                return HttpResponse('Обнаружен недопустимый заголовок')
-
-            messages.success(request, 'Сообщение отправлено')
-            feedback_form = FeedbackForm()
-        else:
-            messages.error(request, 'Ошибка заполениния формы обратной связи')
-    else:
-        feedback_form = FeedbackForm()
-
-    return feedback_form
 
 
 def get_ip_address(request) -> str:

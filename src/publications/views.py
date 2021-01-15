@@ -1,11 +1,10 @@
 from django.shortcuts import get_object_or_404, render
 from django.views.generic.dates import MonthArchiveView
 
-from .models import Post, About, Contact
+from .models import Post
 from .services import (add_new_comment_to_post, filter_post_by_category,
                        filter_post_by_tag, get_similar_posts,
-                       paginate_posts_page, send_feedback,
-                       count_number_of_views_post, search)
+                       paginate_posts_page, count_number_of_views_post, search)
 
 
 def post_list(request, tag_slug=None, category_slug=None):
@@ -47,29 +46,6 @@ def post_detail(request, year, month, day, slug):
                             'new_comment': new_comment,
                             'comment_form': comment_form,
                             'similar_posts': similar_posts})
-
-
-def display_page_about_blog(request):
-    """
-    Display the blog information page.
-    Отобразить страницу с информацией о блоге.
-    """
-    about = get_object_or_404(About)
-    return render(request, 'publications/about.html', {'about': about})
-
-
-def display_page_contact(request):
-    """
-    Display a page with contacts, as well as a feedback form with
-    a blog author.
-    Отобразить страницу с контактами, а также форму обратной связи
-    с автором блога.
-    """
-    contact = get_object_or_404(Contact)
-    feedback_form = send_feedback(request)
-    return render(request, 'publications/contact.html',
-                           {'contact': contact,
-                            'feedback_form': feedback_form})
 
 
 class PostMonthArchiveView(MonthArchiveView):

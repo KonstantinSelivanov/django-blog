@@ -1,0 +1,25 @@
+{% extends "admin/login_base.html" %}
+{% load i18n %} {% load widget_tweaks %}
+{% block login_content %}
+    <div class="container">
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+            <div class="col-xl-4 col-lg-12 col-md-9">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Вы вышли!</h1>
+                                {% block content %}
+                                <p>{% translate "Thanks for spending some quality time with the Web site today." %}</p>
+                                <p><a href="{% url 'admin:index' %}">{% translate 'Log in again' %}</a></p>
+                                {% endblock %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock login_content %}

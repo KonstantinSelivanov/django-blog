@@ -11,11 +11,12 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
-# from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-PROJECT_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                            os.pardir) + '/config/'
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# PROJECT_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+#                             os.pardir) + '/config/'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -34,7 +35,6 @@ SITE_NAME = 'Мой блог'
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -52,7 +52,11 @@ INSTALLED_APPS = [
     'unidecode',
     'captcha',
     'taggit',
+    # CMS
+    'cms.apps.CmsConfig',
+    'django.contrib.admin',
     # Applications
+    'pages.apps.PagesConfig',
     'publications.apps.PublicationsConfig',
 ]
 
@@ -72,9 +76,15 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(PROJECT_ROOT, 'templates')],
-        'APP_DIRS': True,
+        #os.path.join(PROJECT_ROOT, 'templates')
+        'DIRS': [],
+        'APP_DIRS': False,
         'OPTIONS': {
+            'loaders': [
+                'cms.template.Loader',
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+            ],
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.media',
@@ -93,13 +103,13 @@ TEMPLATES = [
 
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, 'static')]
+#STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, 'static')]
 # For prod
 # STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
-STATIC_ROOT = 'config/static'
+# STATIC_ROOT = 'config/static'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media/')
+# MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media/')
 
 WSGI_APPLICATION = 'config.wsgi.application'
 

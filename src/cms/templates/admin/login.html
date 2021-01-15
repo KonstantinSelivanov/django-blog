@@ -1,0 +1,53 @@
+{% extends "admin/login_base.html" %}
+{% load i18n %} {% load widget_tweaks %}
+{% block login_content %}
+    {% if form.errors and not form.non_field_errors %}
+    <div class="alert alert-danger" role="alert">
+        {% if form.errors.items|length == 1 %}
+            {% translate "Please correct the error below." %}
+        {% else %}
+            {% trans "Please correct the errors below." %}
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% if form.non_field_errors %}
+    <div class="alert alert-danger" role="alert">
+        {% for error in form.non_field_errors %}
+            {{ error }}
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div class="container">
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+            <div class="col-xl-4 col-lg-12 col-md-9">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Добро пожаловать!</h1>
+                            </div>
+                            <form class="user" action="{{ app_path }}" method="post" id="login-form">
+                                {% csrf_token %}
+                                <div class="form-group {% if form.username.errors %}errors{% endif %} ">
+                                    {{ form.username.label_tag }}
+                                    {% render_field form.username class="form-control form-control-user" %}
+                                </div>
+                                <div class="form-group {% if form.password.errors %}errors{% endif %}">
+                                    {{ form.password.label_tag }}
+                                    {% render_field form.password class="form-control form-control-user" %}
+                                </div>
+                                <input type="submit" class="btn btn-primary btn-user btn-block" title="{% trans 'Log in' %}" value="{% trans 'Log in' %}"></input>
+                            </form>
+                        </div>
+                        <script type="text/javascript">
+                            document.getElementById('id_username').focus()
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock login_content %}
