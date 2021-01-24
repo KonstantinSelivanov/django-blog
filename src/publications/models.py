@@ -101,7 +101,10 @@ class Post(models.Model):
                               max_length=10,
                               choices=STATUS_CHOICES,
                               default='draft')
-    hits = models.IntegerField(verbose_name='Количество просмотров', default=0)
+    hits = models.IntegerField(verbose_name='Количество просмотров',
+                               default=0)
+    comments = models.IntegerField(verbose_name='Количество комментариев',
+                                   default=0)
 
     # Model manager
     # Менеджер модели

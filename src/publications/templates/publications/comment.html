@@ -1,45 +1,60 @@
-{% load tags_services %} {% load widget_tweaks %} {% load static %}
-                {% comment %} List of comments {% endcomment %}
-                {% comment %} Список комментариев {% endcomment %}
-                    <ul class="comment-list">
-                        <h5 class="post-author_head">Комментарии</h5>
-                        <li>
-                            <div class="desc">
-                                {% for comment in comments%}
-                                    <ul class="comment-list">
-                                        <h5 class="post-author_head">Автор {{ comment.author}} {{ comment.created }}</h5>
-                                        <li><img src="{% static 'images/avatar.png'%}" class="img-responsive" alt="">{{ comment.body|linebreaks}}
-                                            <div class="clearfix"></div>
-                                        </li>
-                                    </ul>
-                                {% endfor %} 
-                            </div>
-                            <div class="clearfix"></div>
-                        </li>
-                    </ul>
-                {% comment %} Displaying a comment form or message about a successfully created comment {% endcomment %}
-                {% comment %} Отображение формы комментариев или сообщения об упешно созданном коментарии {% endcomment %}
-                {% if new_comment %}
-                    <h2>Ваш комментарий был добавлен</h2>
-                {% else %}
-                    <h2>Добавить новый комментарий</h2><br>
-                    <div class="content-form">
-                    <form action="." method="POST">
-                        {% csrf_token %}
-                        {% for field in comment_form.visible_fields %}
-                                {{ field.label_tag }}
-                                <p>
-                                {% render_field field class="form-control" %}
-                                {% if field.help_text %}
-                                <small class="form-text text-muted">{{ field.help_text }}</small>
-                                {% endif %}
-                        {% endfor %}
-                        
-                        {{ comment_form.captcha.errors }}
-                        <script src="{% static 'js/reload_captcha.js' %}"></script>
-                        <a href="" class="captcha-refresh">Не могу распознать текст на картинке. Обновить картинку.</a>
-                        <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
-                        <p><input type="submit" value="ОТПРАВИТЬ"></p>
-                    </form>
-                    </div>
-                {% endif %}
+{% load tags_services %} 
+{% load widget_tweaks %} 
+{% load static %}
+
+
+<div id="nav-tag-comment">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#comments">Комментарии</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#add-comment">Добавить комментарий</a>
+        </li>
+    </ul>
+</div>
+
+<div class="tab-content">
+    <div id="comments" class="tab-pane fade show active">
+        <!-- List comments -->
+        <div id="list-comments" class="card mb-4">
+            <div class="card-body mt-n1 mb-n4">
+            {% if comments %}
+                {% for comment in comments%}
+                <div>
+                    <!-- Header -->
+                    <h4>{{ comment.author}}</h4>
+                    <!-- Date -->
+                    <div class="small font-italic mb-1">{{ comment.created }}</div>
+                    <!-- Body -->
+                    <p class="small">{{ comment.body|safe}}</p>
+                    <hr>
+                </div>
+                {% endfor %} 
+            {% else %}
+                <h5>Пока никто не оставил комментариев.</h5>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+    <div id="add-comment" class="tab-pane fade" >
+        <!-- Form add comments -->
+        <div class="card mb-4">
+            <div class="card-body mt-n1 mb-n4">
+                <form action="." method="POST">
+                {% csrf_token %}
+                {% for field in comment_form.visible_fields %}
+                    {{ field.label_tag }}
+                    <br>
+                    {% render_field field class="form-control" %}
+                    {% if field.help_text %}
+                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                {% endfor %}
+                {{ comment_form.captcha.errors }}
+                <p><button class="btn btn-primary mb-3 mb-lg-0" type="submit">Отправить</button></p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -13,10 +13,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# PROJECT_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-#                             os.pardir) + '/config/'
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -76,7 +74,6 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        #os.path.join(PROJECT_ROOT, 'templates')
         'DIRS': [],
         'APP_DIRS': False,
         'OPTIONS': {
@@ -87,12 +84,9 @@ TEMPLATES = [
             ],
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.media',
-                'django.template.context_processors.static',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'publications.context_processors.posts',
             ],
         },
     },
@@ -103,7 +97,7 @@ TEMPLATES = [
 
 
 STATIC_URL = '/static/'
-#STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, 'static')]
+# STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, 'static')]
 # For prod
 # STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 # STATIC_ROOT = 'config/static'

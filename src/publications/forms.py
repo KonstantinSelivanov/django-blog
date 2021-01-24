@@ -16,4 +16,4 @@ class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        fields = ('author', 'email')
+        fields = ('author', 'email', 'body')

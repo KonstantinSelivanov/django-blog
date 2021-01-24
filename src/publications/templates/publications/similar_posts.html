@@ -1,16 +1,18 @@
-{% load static %}
-                    <ul class="comment-list">
-                        <h5 class="post-author_head">Рекомендованные статьи</h5>
-                        <li>
-                            <div class="desc">
-                                    {% for post in similar_posts %}
-                                        <p>
-                                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-                                        </p>
-                                    {% empty %}
-                                        <p>Пока нет рекомендованных статей</p>  
-                                    {% endfor %}
-                            </div>
-                            <div class="clearfix"></div>
-                        </li>
-                    </ul>
+<!-- Similar post -->
+<div id="similar-post" class="d-flex align-items-stretch justify-content-between">
+    {% for post in similar_posts %}
+    <a class="btn btn-white border-0 rounded shadow post-pager-link p-0 prev ng-star-inserted d-flex" href="{{ post.get_absolute_url }}">
+        <span class="bg-primary p-2 align-items-center text-white"></span>
+        <span class="p-3 justify-content-center ">
+            {{ post.title }}
+        </span>
+    </a>
+    {% empty %}
+    <div class="btn btn-white border-0 rounded shadow post-pager-link p-0 prev ng-star-inserted d-flex h-auto">
+        <span class="bg-primary p-2 d-flex align-items-center text-white"></span>
+        <span class="p-3 d-flex flex-column justify-content-center ">
+            Пока нет похожих постов
+        </span>
+    </div>
+    {% endfor %}
+</div>

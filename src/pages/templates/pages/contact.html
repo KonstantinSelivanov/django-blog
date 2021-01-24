@@ -1,34 +1,55 @@
-{% extends 'base.html' %}
-{% load static %}
-{% load widget_tweaks %}
+{% extends 'base.html' %} {% load static %} {% load widget_tweaks %} {% block content %}
 
-{% block content %}
-            <div class="contact-info">
-                <h2>{{ contact.title }}</h2>
-                <p>{{ contact.body|safe }}</p>
+<div id="contact-page" class="card mb-5">
+    <div class="card-body p-5">
+        <div class="d-flex align-items-center">
+            <div>
+                <!-- Header -->
+                <div class="mb-3">
+                    <!-- Title -->
+                    <h2 class="mb-0">
+                        {{ contact.title }}
+                    </h2>
+                </div>
+                <!-- Body -->
+                <div id="body">
+                    <p>{{ contact.body|safe }}</p>
+                </div>
             </div>
-            <div class="contact-info">
-                <h2>Обратная связь</h2>
+        </div>
+    </div>
+</div>
+
+<div id="feedback-page" class="card mb-5">
+    <div class="card-body p-5">
+        <div class="d-flex align-items-center">
+            <div>
+                <!-- Header -->
+                <div class="mb-3">
+                    <!-- Title -->
+                    <h2 class="mb-0">
+                        Обратная связь
+                    </h2>
+                </div>
+                <!-- Body -->
+                <div id="body">
+                    <form action="." method="POST">
+                    {% csrf_token %}
+                    {% for field in feedback_form.visible_fields %}
+                        {{ field.label_tag }}
+                        <br>
+                        {% render_field field class="form-control" %}
+                        {% if field.help_text %}
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+                    {% endfor %}
+                    {{ feedback_form.captcha.errors }}
+                    <p><button class="btn btn-primary mb-3 mb-lg-0" type="submit">Отправить</button></p>
+                </form>
+                </div>
             </div>
+        </div>
+    </div>
+</div>
 
-			<div class="content-form">
-				<form action="." method="post">
-					{% csrf_token %}
-					{% for field in feedback_form.visible_fields %}
-						{{ field.label_tag }}
-						<p>
-						{% render_field field class="form-control" %}
-						{% if field.help_text %}
-							<small class="form-text text-muted">{{ field.help_text }}</small>
-						{% endif %}
-					{% endfor %}
-							
-					{{ feedback_form.captcha.errors }}
-					<script src="{% static 'js/reload_captcha.js' %}"></script>
-					<a href="" class="captcha-refresh">Не могу распознать текст на картинке. Обновить картинку.</a>
-					<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
-
-					<p><input type="submit" value="ОТПРАВИТЬ"></p>
-				</form>
-			</div>
 {% endblock content %}

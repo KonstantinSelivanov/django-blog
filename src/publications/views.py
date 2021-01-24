@@ -12,15 +12,15 @@ def post_list(request, tag_slug=None, category_slug=None):
     Show all posts published.
     Отобразить все опубликованные посты.
     """
-    post = Post.published.all()
-    post, tag = filter_post_by_tag(tag_slug, post)
-    post, category = filter_post_by_category(category_slug, post)
-    page, object_list = paginate_posts_page(post, 3, request)
-    page, object_list = search(request)
+    posts = Post.published.all()
 
-    return render(request, 'publications/list.html',
-                           {'page': page,
-                            'object_list': object_list,
+    posts = search(request, posts)
+    posts, tag = filter_post_by_tag(tag_slug, posts)
+    posts, category = filter_post_by_category(category_slug, posts)
+    pages = paginate_posts_page(posts, 3, request)
+
+    return render(request, 'publications/post_list.html',
+                           {'object_list': pages,
                             'tag': tag,
                             'category': category})
 
@@ -37,10 +37,10 @@ def post_detail(request, year, month, day, slug):
 
     comments = post.publications_comments.filter(moderation=True)
     new_comment, comment_form = add_new_comment_to_post(request, post)
-    similar_posts = get_similar_posts(post, 4)
+    similar_posts = get_similar_posts(post, 2)
     count_number_of_views_post(request, post)
 
-    return render(request, 'publications/detail.html',
+    return render(request, 'publications/post_detail.html',
                            {'post': post,
                             'comments': comments,
                             'new_comment': new_comment,
@@ -56,4 +56,4 @@ class PostMonthArchiveView(MonthArchiveView):
     queryset = Post.published.all()
     date_field = 'date_published'
     allow_future = True
-    template_name = 'publications/list.html'
+    template_name = 'publications/post_list.html'

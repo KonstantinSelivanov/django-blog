@@ -1,13 +1,23 @@
-{% extends 'base.html' %}
-{% load static %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 
-{% block content %}
-            <div class="contact-info">
-            <h2>{{ about.title }}</h2>
-            <div class="about-section">
-                <div class="about-grid">
+<div class="card mb-5">
+    <div class="card-body p-5">
+        <div class="d-flex align-items-center">
+            <div id="about-page">
+                <!-- Header -->
+                <div class="mb-3">
+                    <!-- Title -->
+                    <h2 class="mb-0">
+                        {{ about.title }}
+                    </h2>
+                </div>
+                <!-- Body -->
+                <div id="body">
                     <p>{{ about.body|safe }}</p>
                 </div>
             </div>
-            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock content %}

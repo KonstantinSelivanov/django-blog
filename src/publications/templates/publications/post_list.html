@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% for post in object_list %}
+<div class="card mb-5">
+    <div class="card-body p-5">
+        <div class="d-flex align-items-center">   
+            <div>
+                <!-- Header post -->
+                <div id="header-post" class="mb-3">
+                    <!-- Title -->
+                    <h2 class="mb-0">
+                        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                    </h2>
+                    <!-- Date -->
+                    <div class="small text-muted mb-2">
+                        {{ post.date_published }} | 
+                        <a href="" class="text-muted">{{ post.author }}</a> |
+                        <i class="bi bi-chat-left-text"></i> {{ post.comments }}
+                        <i class="bi bi-eye"></i> {{ post.hits }}
+                    </div>
+                    <!-- Category and Tags -->
+                    <div class="mb-2">
+                        <!-- Category -->
+                        <a class="badge badge-green-soft text-green text-capitalize mr-2" 
+                           href="{% url "publications:post_list_by_category" post.category.slug %}">
+                           {{ post.category }}
+                        </a>
+                        <!-- Tags -->
+                        {% for tag in post.tags.all %}
+                        <a class="badge badge-primary-soft text-primary text-capitalize mr-2"
+                           href="{% url "publications:post_list_by_tag" tag.slug %}">
+                           #{{ tag.name }}
+                        </a>
+                    {% endfor %}
+                    </div>
+                </div>
+                <!-- Body -->
+                <div id="body">
+                    <p>{{ post.body|truncatewords:50|safe }}</p>
+                    <a class="btn btn-primary" data-cy="readMoreButton-0" href="{{ post.get_absolute_url }}">Читать дальше</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+<!-- Pagination -->
+{% include 'publications/pagination.html' with page=object_list %}
+{% endblock content %}

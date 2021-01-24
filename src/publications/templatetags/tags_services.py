@@ -3,10 +3,7 @@ from django.db.models import Count
 
 from ..models import Category, Post
 
-# A module-level variable named register, which is an instance
-# of template.Library in which all tags and filters are registered.
-# Переменна уровня модуля с именем register, которая является экземпляром
-# template.Library, в котором зарегистрированы все теги и фильтры.
+
 register = template.Library()
 
 
@@ -51,4 +48,12 @@ def show_list_category():
     Отображает посты блога по категориям.
     """
     cat_posts = Category.category_manager.all()
+    # print(cat_posts)
     return {'cat_posts': cat_posts}
+
+
+@register.inclusion_tag('publications/archives.html')
+def render_month_links():
+    return {
+        'all_posts': Post.published.order_by('date_published'),
+    }
