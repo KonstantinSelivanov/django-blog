@@ -7,7 +7,6 @@ def check_cms_configuration(app_config=None, **kwargs):
     result = []
     try:
         get_template('admin:admin/base.html')
-        print('ok!!!!!!!')
     except TemplateDoesNotExist:
-        print('error!!!!!')
+        print('Template connection error !')
     return result

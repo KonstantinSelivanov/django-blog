@@ -1,5 +1,7 @@
 {% for cat in cat_posts %}
 <a class="list-group-item list-group-item-action" href="/category/{{ cat.slug }}/">
-    <div class="font-weight-500">{{ cat.category }}</div>
+    <div class="font-weight-500">
+        {{ cat.category }}
+    </div>
 </a>
 {% endfor %}

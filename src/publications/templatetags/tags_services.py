@@ -48,12 +48,11 @@ def show_list_category():
     Отображает посты блога по категориям.
     """
     cat_posts = Category.category_manager.all()
-    # print(cat_posts)
     return {'cat_posts': cat_posts}
 
 
 @register.inclusion_tag('publications/archives.html')
-def render_month_links():
+def render_post_archive():
     return {
         'all_posts': Post.published.order_by('date_published'),
     }

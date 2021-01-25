@@ -48,7 +48,7 @@
                     <!-- Form search -->
                     <form id="form-search" class="form-inline my-2 my-lg-0" action="{% url 'publications:search' %}" method='GET'>
                         <input class="form-control mr-sm-2" name="search" type="search" placeholder="Поиск...">
-                        <input class="btn btn-primary mb-3 mb-lg-0" type="submit" value="Поиск"/>
+                        <input class="btn btn-primary mb-3 mb-lg-0" type="submit" value="Поиск" />
                     </form>
                 </div>
             </div>
@@ -68,14 +68,21 @@
                             <!-- Header sidebar -->
                             <div class="col-lg-4">
                                 <div id="carbonads">
-                                    <span class="carbon-wrap">
-                                        <a href="https://www.creative-tim.com/?affiliate_id=101249" class="carbon-img" target="_blank" rel="noopener sponsored">
-                                            <img src="https://fallbacks.carbonads.com/nosvn/fallbacks/5bd59fd117c76cf5eda6ba13af644c8a.jpg" alt="ads via Carbon" style="max-width: 130px;" border="0">
-                                        </a>
-                                        <a href="https://www.creative-tim.com/?affiliate_id=101249" class="carbon-text" target="_blank" rel="noopener sponsored">
-                                            Premium Bootstrap themes, templates, and UI kits by Creative Tim.
-                                        </a>
-                                    </span>
+                                    <!-- <span class="carbon-wrap"> -->
+                                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active">
+                                                <img src="{% static 'images/snippets.svg' %}" class="d-block w-64" alt="...">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img src="{% static 'images/python.svg' %}" class="d-block w-64" alt="...">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img src="{% static 'images/django.svg' %}" class="d-block w-64" alt="...">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- </span> -->
                                 </div>
                             </div>
                         </div>
@@ -131,7 +138,7 @@
                                     </div>
                                 </div>
                                 <div class="list-group list-group-flush small mb-0 border-bottom">
-                                    {% render_month_links %}
+                                    {% render_post_archive %}
                                 </div>
                             </div>
                         </aside>

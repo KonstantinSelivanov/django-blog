@@ -2,9 +2,11 @@ from django.shortcuts import get_object_or_404, render
 from django.views.generic.dates import MonthArchiveView
 
 from .models import Post
-from .services import (add_new_comment_to_post, filter_post_by_category,
-                       filter_post_by_tag, get_similar_posts,
-                       paginate_posts_page, count_number_of_views_post, search)
+from .services.comments import add_new_comment_to_post
+from .services.fiters import filter_post_by_category, filter_post_by_tag
+from .services.search import search
+from .services.views_posts import (get_count_number_of_views_post,
+                                   get_similar_posts, paginate_posts_page)
 
 
 def post_list(request, tag_slug=None, category_slug=None):
@@ -38,7 +40,7 @@ def post_detail(request, year, month, day, slug):
     comments = post.publications_comments.filter(moderation=True)
     new_comment, comment_form = add_new_comment_to_post(request, post)
     similar_posts = get_similar_posts(post, 2)
-    count_number_of_views_post(request, post)
+    get_count_number_of_views_post(request, post)
 
     return render(request, 'publications/post_detail.html',
                            {'post': post,

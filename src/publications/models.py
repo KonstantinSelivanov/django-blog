@@ -1,7 +1,7 @@
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
-from django.contrib.auth.models import User
 from django.db import models
+from django.conf import settings
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.utils import timezone
@@ -38,7 +38,7 @@ class Category(models.Model):
     category_manager = models.Manager()
 
     class Meta:
-        verbose_name = 'категория'
+        verbose_name = 'категорию'
         verbose_name_plural = 'категории'
         db_table = 'category'
 
@@ -69,6 +69,36 @@ class Category(models.Model):
                        args=[self.category, self.slug])
 
 
+class Author(models.Model):
+    """
+    Author post.
+    Автор поста.
+    """
+    author = models.OneToOneField(settings.AUTH_USER_MODEL,
+                                  on_delete=models.CASCADE)
+    first_name = models.CharField(verbose_name='Имя', max_length=100)
+    last_name = models.CharField(verbose_name='Фамилия', max_length=100)
+    depiction = models.CharField(verbose_name='Описание', max_length=250)
+    avatar = models.ImageField(verbose_name='Аватарка', upload_to='image/')
+    link_site = models.URLField(verbose_name='URL сайта')
+    link_github = models.URLField(verbose_name='URL GitHub')
+
+    class Meta:
+        verbose_name = 'автора'
+        verbose_name_plural = 'автор'
+        db_table = 'authors'
+
+    def get_full_name(self):
+        """
+        Return the first_name plus the last_name, with a space in between.
+        """
+        full_name = '%s %s' % (self.first_name, self.last_name)
+        return full_name.strip()
+
+    def __str__(self):
+        return self.get_full_name()
+
+
 class Post(models.Model):
     """
     Data model for blog posts.
@@ -82,7 +112,7 @@ class Post(models.Model):
     slug = models.SlugField(max_length=250,
                             blank=True,
                             unique_for_date='date_published')
-    author = models.ForeignKey(User,
+    author = models.ForeignKey(Author,
                                verbose_name='Автор поста',
                                on_delete=models.CASCADE,
                                related_name='publications_posts')
@@ -170,8 +200,8 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ('created',)
-        verbose_name = 'Коментарий'
-        verbose_name_plural = 'Коментарии'
+        verbose_name = 'коментарий'
+        verbose_name_plural = 'коментарии'
         db_table = 'comments'
 
     def __str__(self):
@@ -211,4 +241,4 @@ class Visitor(models.Model):
         ordering = ('-created',)
         verbose_name = 'посетителя'
         verbose_name_plural = 'Посетители'
-        db_table = 'visitor'
+        db_table = 'visitors'

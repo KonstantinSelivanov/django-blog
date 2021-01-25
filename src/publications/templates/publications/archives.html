@@ -2,14 +2,17 @@
 <ul class="list-group">
     {% for year in year_list %}
     <li class="list-group-item d-flex justify-content-between align-items-center">
-        <h6>{{ year.grouper }} г.</h6>{% regroup year.list by date_published.month as month_list %}
+        <h6>{{ year.grouper }} г.</h6>
+        {% regroup year.list by date_published.month as month_list %}
     </li>
         {% for month in month_list %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <a href="{% url 'publications:post_archive_month' year.grouper month.grouper %}">
                     {{ month.list.0.date_published|date:"F" }}
                 </a>
-                <span class="badge badge-primary badge-pill">{{ month.list|length }}</span>
+                <span class="badge badge-primary badge-pill">
+                    {{ month.list|length }}
+                </span>
             </li>
         {% endfor %}
     {% endfor %}

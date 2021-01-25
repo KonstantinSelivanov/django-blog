@@ -1,7 +1,0 @@
-                        {% load tags_services %} 
-                        {% get_most_commented_posts as most_commanted_posts %}
-                        <ul>
-                            {% for post in most_commanted_posts %}
-                            <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-                            {% endfor %}
-                        </ul>

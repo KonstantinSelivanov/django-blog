@@ -1,11 +1,18 @@
 from django.contrib import admin
 
-from .models import Post, Category, Comment
+from .models import Author, Post, Category, Comment
+
+
+@admin.register(Author)
+class AuthorAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'last_name', 'depiction', 'avatar',
+                    'link_site', 'link_github')
 
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'category', 'date_published', 'status', 'hits', 'comments')
+    list_display = ('title', 'author', 'category', 'date_published', 'status',
+                    'hits', 'comments')
     list_filter = ('status', 'created', 'date_published', 'author')
     search_fields = ('title', 'body')
     prepopulated_fields = {'slug': ('title',)}
