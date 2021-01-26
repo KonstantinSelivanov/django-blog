@@ -1,6 +1,8 @@
 from django import forms
-from captcha.fields import CaptchaField
+from django.conf import settings
+
 from tinymce.widgets import TinyMCE
+from captcha.fields import CaptchaField
 
 
 class FeedbackForm(forms.Form):
@@ -14,5 +16,6 @@ class FeedbackForm(forms.Form):
     email = forms.EmailField(label='E-mail',
                              max_length=100,
                              widget=forms.TextInput())
-    message = forms.CharField(label='Сообщение', widget=TinyMCE())
+    message = forms.CharField(label='Сообщение',
+                              widget=TinyMCE(mce_attrs=settings.TINYMCE_USER))
     captcha = CaptchaField(label='Вы точно человек?')

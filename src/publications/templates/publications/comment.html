@@ -37,10 +37,10 @@
             </div>
         </div>
     </div>
-    <div id="add-comment" class="tab-pane fade" >
+    <div id="add-comment" class="tab-pane fade">
         <!-- Form add comments -->
         <div class="card mb-4">
-            <div class="card-body mt-n1 mb-n4">
+            <div class="card-body p-5">
                 <form action="." method="POST">
                 {% csrf_token %}
                 {{ comment_form.media }}

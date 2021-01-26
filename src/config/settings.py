@@ -43,9 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
 
-    'ckeditor',
-    'ckeditor_uploader',  # WYSIWYG editor
-
     'widget_tweaks',
     'unidecode',
     'captcha',
@@ -176,6 +173,7 @@ USE_TZ = True
 # Tag setings. Without register
 TAGGIT_CASE_INSENSITIVE = True
 
+
 # Captcha setings
 CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.random_char_challenge'
 CAPTCHA_IMAGE_SIZE = (150, 50)
@@ -184,64 +182,28 @@ CAPTCHA_BACKGROUND_COLOR = '#cccccc'
 CAPTCHA_FOREGROUND_COLOR = '#001100'
 CAPTCHA_LENGTH = 6
 
-# Settings CKEDITOR
-CKEDITOR_UPLOAD_PATH = "uploads/"
-
-X_FRAME_OPTIONS = 'SAMEORIGIN'
-
-CKEDITOR_CONFIGS = {
-    'default': {
-        # 'skin': 'moono',
-        'skin': 'moono-lisa',
-        'toolbar_YourCustomToolbarConfig': [
-            {'name': 'styles', 'items': ['Format', 'Font', 'FontSize']},
-            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste',
-                                            'PasteFromWord', '-', 'Link',
-                                            'Image', 'Table', 'Blockquote',
-                                            'Smiley']},
-            '/',
-            {'name': 'basicstyles', 'items': ['Bold', 'Italic', 'Underline',
-                                              'Strike', 'Subscript',
-                                              'Superscript']},
-            {'name': 'paragraph', 'items': ['NumberedList', 'BulletedList',
-                                            '-', 'JustifyLeft',
-                                            'JustifyCenter', 'JustifyRight',
-                                            'JustifyBlock']},
-            {'name': 'editing', 'items': ['Find', 'Replace', 'Undo', 'Redo',
-                                          'Maximize', 'Preview']},
-        ],
-        'toolbar': 'YourCustomToolbarConfig',
-        'width': '115%',
-        'tabSpaces': 4,
-        'extraPlugins': ','.join([
-            'uploadimage',  # the upload image feature
-            # your extra plugins here
-            # 'div',
-            'autolink',
-            'autoembed',
-            'embedsemantic',
-            'autogrow',
-            # 'devtools',
-            'widget',
-            # 'lineutils',
-            'clipboard',
-            'dialog',
-            'dialogui',
-            'elementspath'
-        ]),
-    }
+# TinyMCE setings
+TINYMCE_DEFAULT_CONFIG = {
+    "theme": "silver",
+    "menubar": "file edit view insert format tools table help",
+    "plugins": "preview, fullscreen, link, image, media, codesample, lists,"
+        "paste,importcss,searchreplace,autolink,autosave,directionality,code,"
+        "visualblocks,visualchars,table,hr,anchor,toc,advlist,wordcount,"
+        "imagetools, textpattern, noneditable, help, charmap, quickbars",
+    "toolbar": "undo redo preview fullscreen| "
+               "formatselect fontselect fontsizeselect | "
+               "bold italic underline forecolor backcolor | "
+               "link image media codesample | "
+               "alignleft aligncenter alignright alignjustify | "
+               "numlist bullist |"
+               "outdent indent ",
 }
 
-
-TINYMCE_DEFAULT_CONFIG = {
-    'selector': 'textarea',
-    #'theme': 'advanced',
-    'width': 600,
-    'height': 300,
-    'theme_advanced_toolbar_location': 'top',
-    'theme_advanced_buttons1': 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,outdent,indent,hr,|,undo,redo',
-    'theme_advanced_buttons2': 'cut,copy,paste,pastetext,pasteword,|,search,replace,|,link,unlink,charmap,|,visualaid,table,|,blockquote,sub,sup,|,preview,code,emotions,image',
-    'theme_advanced_buttons3': '',
-    'plugins': 'paste,table,spellchecker,searchreplace,emotions',
-    #'theme_advanced_resizing': True,
+TINYMCE_USER = {
+    "theme": "silver",
+    "height": 300,
+    "menubar": False,
+    "plugins": "link, image, codesample, lists",
+    "toolbar": "bold italic underline | link image codesample | "
+        "numlist bullist | alignleft aligncenter alignright alignjustify",
 }
