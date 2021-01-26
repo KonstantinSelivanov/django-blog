@@ -1,5 +1,6 @@
 from django.db import models
-from ckeditor_uploader.fields import RichTextUploadingField
+
+from tinymce.models import HTMLField
 
 
 class About(models.Model):
@@ -8,14 +9,14 @@ class About(models.Model):
     Модель страница о блоге.
     """
     title = models.CharField(verbose_name='Заголовок страницы', max_length=250)
-    body = RichTextUploadingField(verbose_name='Содержание страницы')
+    body = HTMLField(verbose_name='Содержание страницы')
     created = models.DateTimeField(verbose_name='Дата написания',
                                    auto_now_add=True)
     updated = models.DateTimeField(verbose_name='Дата обновления',
                                    auto_now=True)
 
     class Meta:
-        verbose_name = 'Cтраницу о блоге'
+        verbose_name = 'страницу о блоге'
         verbose_name_plural = 'Cтраница о блоге'
         db_table = 'about'
 
@@ -29,14 +30,14 @@ class Contact(models.Model):
     Модель страницы контактов.
     """
     title = models.CharField(verbose_name='Заголовок страницы', max_length=250)
-    body = RichTextUploadingField(verbose_name='Содержание страницы')
+    body = HTMLField(verbose_name='Содержание страницы')
     created = models.DateTimeField(verbose_name='Дата написания',
                                    auto_now_add=True)
     updated = models.DateTimeField(verbose_name='Дата обновления',
                                    auto_now=True)
 
     class Meta:
-        verbose_name = 'Cтраницу контактов'
+        verbose_name = 'страницу контактов'
         verbose_name_plural = 'Cтраница контактов'
         db_table = 'contact'
 

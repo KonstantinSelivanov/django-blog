@@ -1,4 +1,7 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
 
 <div class="card mb-5">
     <div class="card-body p-5">
@@ -7,9 +10,7 @@
                 <!-- Header -->
                 <div class="mb-3">
                     <!-- Title -->
-                    <h2 class="mb-0">
-                        {{ about.title }}
-                    </h2>
+                    <h2 class="mb-0">{{ about.title }}</h2>
                 </div>
                 <!-- Body -->
                 <div id="body">

@@ -1,6 +1,6 @@
 from django import forms
 from captcha.fields import CaptchaField
-from ckeditor.widgets import CKEditorWidget
+from tinymce.widgets import TinyMCE
 
 
 class FeedbackForm(forms.Form):
@@ -14,7 +14,5 @@ class FeedbackForm(forms.Form):
     email = forms.EmailField(label='E-mail',
                              max_length=100,
                              widget=forms.TextInput())
-    message = forms.CharField(label='Сообщение',
-                              widget=CKEditorWidget())
-
+    message = forms.CharField(label='Сообщение', widget=TinyMCE())
     captcha = CaptchaField(label='Вы точно человек?')

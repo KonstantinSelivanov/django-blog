@@ -1,5 +1,4 @@
-from ckeditor.fields import RichTextField
-from ckeditor_uploader.fields import RichTextUploadingField
+from tinymce.models import HTMLField
 from django.db import models
 from django.conf import settings
 from django.template.defaultfilters import slugify
@@ -120,7 +119,7 @@ class Post(models.Model):
                                  verbose_name='Категория',
                                  on_delete=models.CASCADE,
                                  related_name='publications_category')
-    body = RichTextUploadingField(verbose_name='Содержание поста')
+    body = HTMLField(verbose_name='Содержание поста')
     date_published = models.DateTimeField(verbose_name='Дата публикации поста',
                                           default=timezone.now)
     created = models.DateTimeField(verbose_name='Дата написания поста',
@@ -191,7 +190,7 @@ class Comment(models.Model):
                              related_name='publications_comments')
     author = models.CharField(verbose_name='Имя', max_length=80)
     email = models.EmailField(verbose_name='e-mail')
-    body = RichTextField(verbose_name='Коментарий')
+    body = HTMLField(verbose_name='Коментарий')
     created = models.DateTimeField(verbose_name='Дата создания комментария',
                                    auto_now_add=True)
     updated = models.DateTimeField(verbose_name='Дата изменения комментария',

@@ -1,4 +1,7 @@
-{% extends 'base.html' %} {% load static %} {% load widget_tweaks %} {% block content %}
+{% extends 'base.html' %}
+{% load static %} {% load widget_tweaks %}
+
+{% block content %}
 
 <div id="contact-page" class="card mb-5">
     <div class="card-body p-5">
@@ -7,9 +10,7 @@
                 <!-- Header -->
                 <div class="mb-3">
                     <!-- Title -->
-                    <h2 class="mb-0">
-                        {{ contact.title }}
-                    </h2>
+                    <h2 class="mb-0">{{ contact.title }}</h2>
                 </div>
                 <!-- Body -->
                 <div id="body">
@@ -27,14 +28,13 @@
                 <!-- Header -->
                 <div class="mb-3">
                     <!-- Title -->
-                    <h2 class="mb-0">
-                        Обратная связь
-                    </h2>
+                    <h2 class="mb-0">Обратная связь</h2>
                 </div>
                 <!-- Body -->
                 <div id="body">
                     <form action="." method="POST">
                     {% csrf_token %}
+                    {{ feedback_form.media }}
                     {% for field in feedback_form.visible_fields %}
                         {{ field.label_tag }}
                         <br>
