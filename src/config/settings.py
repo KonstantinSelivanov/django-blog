@@ -47,15 +47,15 @@ INSTALLED_APPS = [
     'unidecode',
     'captcha',
     'taggit',
+    'ckeditor',
+    'ckeditor_uploader',
     # CMS
-        'tinymce',
     'cms.apps.CmsConfig',
     'django.contrib.admin',
     # Applications
-    'pages.apps.PagesConfig',
-    'publications.apps.PublicationsConfig',
-
-
+    'pages',
+    'feedback',
+    'blog',
 ]
 
 
@@ -67,6 +67,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -87,6 +88,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                
             ],
         },
     },
@@ -97,13 +99,9 @@ TEMPLATES = [
 
 
 STATIC_URL = '/static/'
-# STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, 'static')]
-# For prod
-# STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
-# STATIC_ROOT = 'config/static'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
-# MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
@@ -124,6 +122,7 @@ DATABASES = {
         }
     }
 }
+
 # Configuring messages to be sent to the console instead of using
 # an SMTP server
 # Настройка отправки сообщений в консоль вместо использования SMTP-сервера
@@ -174,7 +173,7 @@ USE_TZ = True
 TAGGIT_CASE_INSENSITIVE = True
 
 
-# Captcha setings
+# Captcha settings
 CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.random_char_challenge'
 CAPTCHA_IMAGE_SIZE = (150, 50)
 CAPTCHA_FONT_SIZE = (28)
@@ -182,28 +181,66 @@ CAPTCHA_BACKGROUND_COLOR = '#cccccc'
 CAPTCHA_FOREGROUND_COLOR = '#001100'
 CAPTCHA_LENGTH = 6
 
-# TinyMCE setings
-TINYMCE_DEFAULT_CONFIG = {
-    "theme": "silver",
-    "menubar": "file edit view insert format tools table help",
-    "plugins": "preview, fullscreen, link, image, media, codesample, lists,"
-        "paste,importcss,searchreplace,autolink,autosave,directionality,code,"
-        "visualblocks,visualchars,table,hr,anchor,toc,advlist,wordcount,"
-        "imagetools, textpattern, noneditable, help, charmap, quickbars",
-    "toolbar": "undo redo preview fullscreen| "
-               "formatselect fontselect fontsizeselect | "
-               "bold italic underline forecolor backcolor | "
-               "link image media codesample | "
-               "alignleft aligncenter alignright alignjustify | "
-               "numlist bullist |"
-               "outdent indent ",
+# CKeditor settings
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_IMAGE_BACKEND = "pillow"
+CKEDITOR_THUMBNAIL_SIZE = (300, 300)
+CKEDITOR_IMAGE_QUALITY = 40
+CKEDITOR_BROWSE_SHOW_DIRS = True
+CKEDITOR_ALLOW_NONIMAGE_FILES = True
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'skin': 'moono-lisa',
+        'toolbar_CustomToolbarConfig': [
+            {'name': 'item1', 'items': ['Format', 'Font', 'FontSize']},
+            {'name': 'item2', 'items': ['Bold', 'Italic', 'Underline',
+                                        'Strike']},
+            {'name': 'item3', 'items': ['JustifyLeft', 'JustifyCenter',
+                                        'JustifyRight', 'JustifyBlock']},
+            {'name': 'item4', 'items': ['NumberedList', 'BulletedList']},
+            '/',
+            {'name': 'item5', 'items': ['Link', 'Image', 'Table',
+                                        'SpecialChar']},
+            {'name': 'item6', 'items': ['Subscript', 'Superscript',
+                                        'TextColor', 'BGColor']},
+            {'name': 'item7', 'items': ['Templates', 'Preview',
+                                        'Maximize', 'CodeSnippet']},
+        ],
+        'toolbar': 'CustomToolbarConfig',
+        'width': '100%',
+        'tabSpaces': 4,
+        'extraPlugins': ','.join(
+            [
+                'codesnippet', 'autolink', 'preview' 
+            ]),
+    },
+
+    'user': {
+        'skin': 'moono-lisa',
+        'toolbar_CustomToolbarConfig': [
+            {'name': 'item2', 'items': ['Bold', 'Italic', 'Underline',
+                                        'Strike']},
+            {'name': 'item5', 'items': ['Link', 'Image', 'Table',
+                                        'SpecialChar', 'CodeSnippet',
+                                        'Smiley']},
+            {'name': 'item4', 'items': ['NumberedList', 'BulletedList']},
+            {'name': 'item3', 'items': ['JustifyLeft', 'JustifyCenter',
+                                        'JustifyRight', 'JustifyBlock']},
+        ],
+        'toolbar': 'CustomToolbarConfig',
+        'tabSpaces': 4,
+        'width': 'auto',
+        'extraPlugins': ','.join(
+            [
+                'codesnippet', 'autolink', 'preview' 
+            ]),
+    }
 }
 
-TINYMCE_USER = {
-    "theme": "silver",
-    "height": 300,
-    "menubar": False,
-    "plugins": "link, image, codesample, lists",
-    "toolbar": "bold italic underline | link image codesample | "
-        "numlist bullist | alignleft aligncenter alignright alignjustify",
-}
+
+# Site settings
+SITE_NAME = 'Записки программиста'
+SITE_DESCRIPTION_TITLE = 'Записки программиста'
+SITE_DESCRIPTION_TEXT = 'Снипеты: Python, Django, SQL, Linux.'
+SITE_COPYRIGHT = 'Copyright © IT Notes 2021'

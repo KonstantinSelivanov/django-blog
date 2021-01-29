@@ -1,0 +1,57 @@
+{% load tags_services %} {% load widget_tweaks %} {% load static %}
+<div id="nav-tag-comment">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#comments">Комментарии</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#add-comment">Добавить комментарий</a>
+        </li>
+    </ul>
+</div>
+
+<div class="tab-content">
+    <div id="comments" class="tab-pane fade show active">
+        <!-- List comments -->
+        <div id="list-comments" class="card mb-4">
+            <div class="card-body mt-n1 mb-n4">
+            {% if comments %}
+                {% for comment in comments%}
+                <div>
+                    <!-- Header -->
+                    <h4>{{ comment.author}}</h4>
+                    <!-- Date -->
+                    <div class="small font-italic mb-1">{{ comment.created }}</div>
+                    <!-- Body -->
+                    <p class="small">{{ comment.body|safe}}</p>
+                    <hr>
+                </div>
+                {% endfor %} 
+            {% else %}
+                <h5>Пока никто не оставил комментариев.</h5>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+    <div id="add-comment" class="tab-pane fade">
+        <!-- Form add comments -->
+        <div class="card mb-4">
+            <div class="card-body p-5">
+                <form action="." method="POST">
+                {% csrf_token %}
+                {{ comment_form.media }}
+                {% for field in comment_form.visible_fields %}
+                    {{ field.label_tag }}
+                    <br>
+                    {% render_field field class="form-control" %}
+                    {% if field.help_text %}
+                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                {% endfor %}
+                {{ comment_form.captcha.errors }}
+                <p><button class="btn btn-primary mb-3 mb-lg-0" type="submit">Отправить</button></p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
