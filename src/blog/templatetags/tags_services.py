@@ -61,6 +61,7 @@ def render_post_archive():
         'all_posts': Post.published.order_by('date_published'),
     }
 
+
 @register.simple_tag(name='get_attribute')
 def get_attribute(name):
     """

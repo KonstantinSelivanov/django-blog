@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class PublicationsConfig(AppConfig):
+class BlogConfig(AppConfig):
     name = 'blog'
     verbose_name = 'Публикации в блоге'

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.flatpages',
     # Site map
     # Карта сайта
     'django.contrib.sites',
@@ -50,12 +51,12 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     # CMS
-    'cms.apps.CmsConfig',
+    # 'cms.apps.CmsConfig',
     'django.contrib.admin',
     # Applications
-    'pages',
-    'feedback',
-    'blog',
+    'pages.apps.PagesConfig',
+    'feedback.apps.FeedbackConfig',
+    'blog.apps.BlogConfig',
 ]
 
 
@@ -88,20 +89,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                
             ],
         },
     },
 ]
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
-
-
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
@@ -122,19 +113,6 @@ DATABASES = {
         }
     }
 }
-
-# Configuring messages to be sent to the console instead of using
-# an SMTP server
-# Настройка отправки сообщений в консоль вместо использования SMTP-сервера
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# Email settings
-# EMAIL_HOST = 'smtp.mail.ru'
-EMAIL_HOST_USER = 'admin@localhost.ru'
-# EMAIL_HOST_PASSWORD = 'mypassword'
-# EMAIL_PORT = 465
-# EMAIL_USE_SSL = True
-# DEFAULT_FROM_EMAIL = 'mymail@mail.ru'
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -168,6 +146,30 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+# ----------------------
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/3.1/howto/static-files/
+
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# SMTP settings
+# Configuring messages to be sent to the console instead of using
+# an SMTP server
+# Настройка отправки сообщений в консоль вместо использования SMTP-сервера
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Email settings
+# EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_HOST_USER = 'admin@localhost.ru'
+# EMAIL_HOST_PASSWORD = 'mypassword'
+# EMAIL_PORT = 465
+# EMAIL_USE_SSL = True
+# DEFAULT_FROM_EMAIL = 'mymail@mail.ru'
 
 # Tag setings. Without register
 TAGGIT_CASE_INSENSITIVE = True
@@ -212,7 +214,7 @@ CKEDITOR_CONFIGS = {
         'tabSpaces': 4,
         'extraPlugins': ','.join(
             [
-                'codesnippet', 'autolink', 'preview' 
+                'codesnippet', 'autolink', 'preview'
             ]),
     },
 
@@ -233,7 +235,7 @@ CKEDITOR_CONFIGS = {
         'width': 'auto',
         'extraPlugins': ','.join(
             [
-                'codesnippet', 'autolink', 'preview' 
+                'codesnippet', 'autolink', 'preview'
             ]),
     }
 }
