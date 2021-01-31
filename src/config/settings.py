@@ -25,10 +25,9 @@ SECRET_KEY = 'di(b9s#(w$^_4=ed^27cycdg@(_0t-t9_4q773ustt#(&1)q&m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1:8000', 'localhost:8000']
 
 SITE_ID = 3
-SITE_NAME = 'Мой блог'
 
 # Application definition
 
@@ -51,7 +50,6 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     # CMS
-    # 'cms.apps.CmsConfig',
     'django.contrib.admin',
     # Applications
     'pages.apps.PagesConfig',
@@ -68,7 +66,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -80,7 +77,6 @@ TEMPLATES = [
         'APP_DIRS': False,
         'OPTIONS': {
             'loaders': [
-                'cms.template.Loader',
                 'django.template.loaders.filesystem.Loader',
                 'django.template.loaders.app_directories.Loader',
             ],
